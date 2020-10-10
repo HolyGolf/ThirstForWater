@@ -1,0 +1,24 @@
+Decrease rate: 80
+  #The speed at which a player leaves 1 point of water (In seconds).
+Poisoning bottle chance: 50
+  #Chance to get poisoned when the player drinks a bottle of plain water.
+Poisoning water chance: 90
+  #Chance to get poisoned when the player drinks water from the reservoir.
+Poisoning duration: 20
+  #How long does the poisoning last (In seconds).
+Sprint: true
+  #If the water is at level 3 or less, then the player cannot run.
+Damage: 3
+  #Damage to player per second when water runs out.
+Actionbar: true
+  #Water indicator above the toolbar. (true/false)
+LowWaterMessage: You need to drink!
+  #Message if the water indicator is off and the player is running out of water.
+HighWaterMessage: You don't want to drink anymore.
+  #Message if the water indicator is off and the player has drunk enough water.
+WaterLore: The water in this bottle is purified.
+  #Description of the clear water bottle.
+WaterName: Clear water bottle
+  #The name of the pure water bottle.
+  #Don't touch data. It's Player UUID : Amount of water.
+data:
