@@ -1,17 +1,21 @@
-Decrease rate: 80
-  #The speed at which a player leaves 1 point of water (In seconds).
+Decrease rate: 60
+  #The speed at which a player leaves 7 points out of 100 points (In seconds).
+Sprint rate: 10
+  #The speed at which a player leaves 1 point of water when he sprinting (In seconds).
 Poisoning bottle chance: 50
   #Chance to get poisoned when the player drinks a bottle of plain water.
 Poisoning water chance: 90
   #Chance to get poisoned when the player drinks water from the reservoir.
 Poisoning duration: 20
   #How long does the poisoning last (In seconds).
-Sprint: true
+Sprint: false
   #If the water is at level 3 or less, then the player cannot run.
 Damage: 3
   #Damage to player per second when water runs out.
 Actionbar: true
   #Water indicator above the toolbar. (true/false)
+Minimalismbar: false
+  #Action bar in the style of minimalism "-------------------"
 LowWaterMessage: You need to drink!
   #Message if the water indicator is off and the player is running out of water.
 HighWaterMessage: You don't want to drink anymore.

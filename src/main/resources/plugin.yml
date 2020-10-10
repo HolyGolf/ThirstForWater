@@ -1,5 +1,5 @@
 name: ThirstforWater
-version: ${project.version}
+version: 1.2
 main: thirstforwater.thirstforwater.Thirstforwater
 api-version: 1.13
 authors: [HolyGolf]

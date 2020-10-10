@@ -32,6 +32,7 @@ public class events implements Listener {
 	public static int idt;
 	public static int idt2;
 	public static int idt3;
+	public static int idt4;
 
 public void thirst(Player p) {
 	int time = plugin.getConfig().getInt("Decrease rate") * 20;
@@ -40,9 +41,16 @@ public void thirst(Player p) {
 		public void run() {
 				if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) {
 					if (p.isOnline()) {
-						if (list.get(p.getUniqueId()) > 1) {
-							int wt = list.get(p.getUniqueId()) - 1;
+						if (list.get(p.getUniqueId()) > 0) {
+							int wt = list.get(p.getUniqueId()) - 7;
 							list.replace(p.getUniqueId(), wt);
+							if (!plugin.getConfig().getBoolean("Actionbar")) {
+								if (list.get(p.getUniqueId()) < 20) {
+									p.sendMessage(ChatColor.RED + plugin.getConfig().getString("LowWaterMessage"));
+								} else if (list.get(p.getUniqueId()) < 110 && list.get(p.getUniqueId()) > 100) {
+									p.sendMessage(ChatColor.GREEN + plugin.getConfig().getString("HighWaterMessage"));
+								}
+							}
 						} else {
 							damage(p);
 						}
@@ -54,14 +62,36 @@ public void thirst(Player p) {
 	}, 0L, time);
 }
 
+public void sprint(Player p) {
+	int spr = plugin.getConfig().getInt("Sprint rate") * 20;
+	idt4 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+		@Override
+		public void run() {
+			if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) {
+				if (p.isOnline()) {
+					if (list.get(p.getUniqueId()) > 0) {
+						int wt = list.get(p.getUniqueId()) - 1;
+						list.replace(p.getUniqueId(), wt);
+					} else {
+						damage(p);
+					}
+				} else {
+					getServer().getScheduler().cancelTask(idt4);
+				}
+			}
+		}
+	}, 0L, spr);
+}
+
+
 public void damage(Player p){
 	idt3 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 		@Override
 		public void run() {
 				if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) {
 					if (p.isOnline()) {
-						if (list.get(p.getUniqueId()) == 0) {
-							if (p.getHealth() > 0 && list.get(p.getUniqueId()) == 0) {
+						if (list.get(p.getUniqueId()) <= 0) {
+							if (p.getHealth() > 0 && list.get(p.getUniqueId()) <= 0) {
 								p.damage(plugin.getConfig().getInt("Damage"));
 							} else {
 								getServer().getScheduler().cancelTask(idt3);
@@ -86,75 +116,136 @@ public void monitor(Player p) {
 			if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) {
 				if (p.isOnline()) {
 					if (plugin.getConfig().getBoolean("Actionbar")) {
-						if (list.get(p.getUniqueId()) == 0) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_RED + "---------------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) >= 20) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "####################" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 19) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "###################" + ChatColor.DARK_GRAY + "-" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 18) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "##################" + ChatColor.DARK_GRAY + "--" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 17) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "#################" + ChatColor.DARK_GRAY + "---" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 16) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "################" + ChatColor.DARK_GRAY + "----" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 15) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "###############" + ChatColor.DARK_GRAY + "-----" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 14) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "##############" + ChatColor.DARK_GRAY + "------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 13) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "#############" + ChatColor.DARK_GRAY + "-------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 12) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "############" + ChatColor.DARK_GRAY + "--------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 11) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "###########" + ChatColor.DARK_GRAY + "---------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 10) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "##########" + ChatColor.DARK_GRAY + "----------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 9) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "#########" + ChatColor.DARK_GRAY + "-----------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 8) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "########" + ChatColor.DARK_GRAY + "------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 7) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "#######" + ChatColor.DARK_GRAY + "-------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 6) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "######" + ChatColor.DARK_GRAY + "--------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 5) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "#####" + ChatColor.DARK_GRAY + "---------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 4) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "####" + ChatColor.DARK_GRAY + "----------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 3) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.RED + "###" + ChatColor.DARK_GRAY + "-----------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						} else if (list.get(p.getUniqueId()) == 2) {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.RED + "##" + ChatColor.DARK_GRAY + "------------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
+						if (!plugin.getConfig().getBoolean("Minimalismbar")) {
+							if (list.get(p.getUniqueId()) <= 0) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_RED + "---------------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 100) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "####################" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 95) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "###################" + ChatColor.DARK_GRAY + "-" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 90) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "##################" + ChatColor.DARK_GRAY + "--" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 85) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "#################" + ChatColor.DARK_GRAY + "---" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 80) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "################" + ChatColor.DARK_GRAY + "----" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 75) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "###############" + ChatColor.DARK_GRAY + "-----" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 70) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "##############" + ChatColor.DARK_GRAY + "------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 65) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "#############" + ChatColor.DARK_GRAY + "-------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 60) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "############" + ChatColor.DARK_GRAY + "--------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 55) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "###########" + ChatColor.DARK_GRAY + "---------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 50) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "##########" + ChatColor.DARK_GRAY + "----------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 45) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "#########" + ChatColor.DARK_GRAY + "-----------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 40) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "########" + ChatColor.DARK_GRAY + "------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 35) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "#######" + ChatColor.DARK_GRAY + "-------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 30) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "######" + ChatColor.DARK_GRAY + "--------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 25) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "#####" + ChatColor.DARK_GRAY + "---------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 20) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "####" + ChatColor.DARK_GRAY + "----------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 15) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.RED + "###" + ChatColor.DARK_GRAY + "-----------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 10) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.RED + "##" + ChatColor.DARK_GRAY + "------------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) > 0) {
+								String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.RED + "#" + ChatColor.DARK_GRAY + "-------------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
+								messag(p, message);
+							}
 						} else {
-							String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.RED + "#" + ChatColor.DARK_GRAY + "-------------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-							messag(p, message);
-						}
-					} else {
-						if (list.get(p.getUniqueId()) <= 3) {
-							p.sendMessage(ChatColor.RED + plugin.getConfig().getString("LowWaterMessage"));
-						} else if (list.get(p.getUniqueId()) <= 23 && list.get(p.getUniqueId()) >= 20) {
-							p.sendMessage(ChatColor.GREEN + plugin.getConfig().getString("HighWaterMessage"));
+							if (list.get(p.getUniqueId()) <= 0) {
+								String message = ChatColor.DARK_RED + "--------------------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 100) {
+								String message = ChatColor.DARK_BLUE + "--------------------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 95) {
+								String message = ChatColor.DARK_BLUE + "-------------------" + ChatColor.DARK_GRAY + "-";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 90) {
+								String message = ChatColor.DARK_BLUE + "------------------" + ChatColor.DARK_GRAY + "--";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 85) {
+								String message = ChatColor.DARK_BLUE + "-----------------" + ChatColor.DARK_GRAY + "---";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 80) {
+								String message = ChatColor.DARK_BLUE + "----------------" + ChatColor.DARK_GRAY + "----";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 75) {
+								String message = ChatColor.DARK_BLUE + "---------------" + ChatColor.DARK_GRAY + "-----";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 70) {
+								String message = ChatColor.DARK_BLUE + "--------------" + ChatColor.DARK_GRAY + "------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 65) {
+								String message = ChatColor.DARK_BLUE + "-------------" + ChatColor.DARK_GRAY + "-------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 60) {
+								String message = ChatColor.DARK_BLUE + "------------" + ChatColor.DARK_GRAY + "--------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 55) {
+								String message = ChatColor.DARK_BLUE + "-----------" + ChatColor.DARK_GRAY + "---------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 50) {
+								String message = ChatColor.DARK_BLUE + "----------" + ChatColor.DARK_GRAY + "----------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 45) {
+								String message = ChatColor.DARK_BLUE + "---------" + ChatColor.DARK_GRAY + "-----------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 40) {
+								String message = ChatColor.DARK_BLUE + "--------" + ChatColor.DARK_GRAY + "------------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 35) {
+								String message = ChatColor.DARK_BLUE + "-------" + ChatColor.DARK_GRAY + "-------------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 30) {
+								String message = ChatColor.DARK_BLUE + "------" + ChatColor.DARK_GRAY + "--------------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 25) {
+								String message = ChatColor.DARK_BLUE + "-----" + ChatColor.DARK_GRAY + "---------------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 20) {
+								String message = ChatColor.DARK_BLUE + "----" + ChatColor.DARK_GRAY + "----------------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 15) {
+								String message = ChatColor.RED + "---" + ChatColor.DARK_GRAY + "-----------------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) >= 10) {
+								String message = ChatColor.RED + "--" + ChatColor.DARK_GRAY + "------------------";
+								messag(p, message);
+							} else if (list.get(p.getUniqueId()) > 0) {
+								String message = ChatColor.RED + "-" + ChatColor.DARK_GRAY + "-------------------";
+								messag(p, message);
+							}
 						}
 					}
 				} else {
@@ -168,9 +259,9 @@ public void monitor(Player p) {
 @EventHandler
 public void onPlayerJoin(PlayerJoinEvent player) {
 	if (!list.containsKey(player.getPlayer().getUniqueId())) {
-		list.put(player.getPlayer().getUniqueId(), 24);
+		list.put(player.getPlayer().getUniqueId(), 111);
 	} else {
-		int gg = list.get(player.getPlayer().getUniqueId()) +1;
+		int gg = list.get(player.getPlayer().getUniqueId()) + 2;
 		list.replace(player.getPlayer().getUniqueId(), gg);
 	}
 	thirst(player.getPlayer());
@@ -186,24 +277,31 @@ public void onPlayerJoin(PlayerJoinEvent player) {
 
 @EventHandler
 public void sprint(PlayerToggleSprintEvent event) {
-	if (event.getPlayer().isSprinting() && list.get(event.getPlayer().getUniqueId()) <= 3 && plugin.getConfig().getBoolean("Sprint")) {
+	if (event.getPlayer().isSprinting() && list.get(event.getPlayer().getUniqueId()) <= 30 && plugin.getConfig().getBoolean("Sprint")) {
 		event.setCancelled(true);
+		event.getPlayer().setSprinting(false);
+	} else {
+		if (event.isSprinting()) {
+			sprint(event.getPlayer());
+		} else {
+			getServer().getScheduler().cancelTask(idt4);
+		}
 	}
 }
 
 @EventHandler
 public void onPlayerRespawn(PlayerRespawnEvent player){
-	list.replace(player.getPlayer().getUniqueId(), 23);
+	list.replace(player.getPlayer().getUniqueId(), 110);
 }
 
 @EventHandler
 public void onPlayerEvent(PlayerItemConsumeEvent event) {
 	if (event.getItem().getType() == Material.POTION && event.getItem().hasItemMeta() && event.getItem().getItemMeta().hasDisplayName() && event.getItem().getItemMeta().hasLore() && event.getItem().getItemMeta().getLore().contains(ChatColor.AQUA + plugin.getConfig().getString("WaterLore")) && event.getItem().getItemMeta().getDisplayName().equals(ChatColor.AQUA + plugin.getConfig().getString("WaterName"))) {
-		if ((list.get(event.getPlayer().getUniqueId()) + 7) <= 23) {
-			int gg = list.get(event.getPlayer().getUniqueId()) + 7;
+		if ((list.get(event.getPlayer().getUniqueId()) + 35) <= 110) {
+			int gg = list.get(event.getPlayer().getUniqueId()) + 35;
 			list.replace(event.getPlayer().getUniqueId(), gg);
 		} else {
-			list.replace(event.getPlayer().getUniqueId(), 23);
+			list.replace(event.getPlayer().getUniqueId(), 110);
 		}
 	} else if (event.getItem() != null && event.getItem().getItemMeta() != null && event.getItem().getItemMeta() instanceof PotionMeta) {
 		PotionType potionType = ((PotionMeta) event.getItem().getItemMeta()).getBasePotionData().getType();
@@ -213,11 +311,11 @@ public void onPlayerEvent(PlayerItemConsumeEvent event) {
 				if (ran <= plugin.getConfig().getInt("Poisoning bottle chance")) {
 					event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, (plugin.getConfig().getInt("Poisoning duration") * 20 ), 1));
 				}
-				if ((list.get(event.getPlayer().getUniqueId()) + 5) <= 23) {
-					int gg = list.get(event.getPlayer().getUniqueId()) + 5;
+				if ((list.get(event.getPlayer().getUniqueId()) + 35) <= 110) {
+					int gg = list.get(event.getPlayer().getUniqueId()) + 35;
 					list.replace(event.getPlayer().getUniqueId(), gg);
 				} else {
-					list.replace(event.getPlayer().getUniqueId(), 23);
+					list.replace(event.getPlayer().getUniqueId(), 110);
 				}
 		}
 	}
