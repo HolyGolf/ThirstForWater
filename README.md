@@ -10,7 +10,9 @@ Purified water restores 7 points, and ordinary water restores 5 points.
 I recommend boiling water in the furnace ^-^
 
 ```yml
-Note: By default, in the config, the water reduction rate is 80 seconds, but I recommend setting it to 35-45 seconds. This is more correct.
+Note: By default, in the config, the water reduction rate is 80 seconds,
+but I recommend setting it to 35-45 seconds. This is more correct.
+But remember that if you are AFK, then the water disappear anyway.
 ```
 ![bar](/images/3.png)
 If you have only 3 points of water left, then you cannot run. Unless, of course, you turn it off in the configs.
