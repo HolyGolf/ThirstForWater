@@ -311,8 +311,8 @@ public void onPlayerEvent(PlayerItemConsumeEvent event) {
 				if (ran <= plugin.getConfig().getInt("Poisoning bottle chance")) {
 					event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, (plugin.getConfig().getInt("Poisoning duration") * 20 ), 1));
 				}
-				if ((list.get(event.getPlayer().getUniqueId()) + 35) <= 110) {
-					int gg = list.get(event.getPlayer().getUniqueId()) + 35;
+				if ((list.get(event.getPlayer().getUniqueId()) + 20) <= 110) {
+					int gg = list.get(event.getPlayer().getUniqueId()) + 20;
 					list.replace(event.getPlayer().getUniqueId(), gg);
 				} else {
 					list.replace(event.getPlayer().getUniqueId(), 110);
@@ -353,8 +353,8 @@ public void onInteract(PlayerInteractEvent event) {
 				if (ran <= plugin.getConfig().getInt("Poisoning water chance")) {
 					event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, (plugin.getConfig().getInt("Poisoning duration") * 20), 1));
 				}
-				if ((list.get(event.getPlayer().getUniqueId()) + 5) <= 23) {
-					int gg = list.get(event.getPlayer().getUniqueId()) + 5;
+				if ((list.get(event.getPlayer().getUniqueId()) + 20) <= 23) {
+					int gg = list.get(event.getPlayer().getUniqueId()) + 20;
 					list.replace(event.getPlayer().getUniqueId(), gg);
 				} else {
 					list.replace(event.getPlayer().getUniqueId(), 23);
