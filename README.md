@@ -4,15 +4,16 @@ This plugin adds a water thirst mechanic that can be quenched by drinking water 
 
 ![craft](/images/2.png)
 
-If you drink a bottle of water, there is a certain chance that you will get poisoned. You can also drink directly from the reservoir (Shift + Right Click on water), but if you are not the king of fortune, then you will get poisoned.​
+If you drink a bottle of water, there is a certain chance that you will get poisoned. You can also drink directly from the reservoir (Shift + Right Click on water), but if you are not the king of fortune, then you will get poisoned.
+
+When you run, the water disappears faster.
 
 Purified water restores 7 points, and ordinary water restores 5 points.
+
 I recommend boiling water in the furnace ^-^
 
 ```yml
-Note: By default, in the config, the water reduction rate is 80 seconds,
-but I recommend setting it to 35-45 seconds. This is more correct.
-But remember that if you are AFK, then the water disappear anyway.
+Note: Remember that if you are AFK, then the water disappear anyway.
 ```
 ![bar](/images/3.png)
 If you have only 3 points of water left, then you cannot run. Unless, of course, you turn it off in the configs.
@@ -24,20 +25,24 @@ If there are no points left, then you will start dying. Hooray!
 And of course you can customize a lot in the configuration file.
 
 ```yml
-Decrease rate: 80
-  #The speed at which a player leaves 1 point of water (In seconds).
+Decrease rate: 60
+  #The speed at which a player leaves 7 points out of 100 points (In seconds).
+Sprint rate: 10
+  #The speed at which a player leaves 1 point of water when he sprinting (In seconds).
 Poisoning bottle chance: 50
   #Chance to get poisoned when the player drinks a bottle of plain water.
 Poisoning water chance: 90
   #Chance to get poisoned when the player drinks water from the reservoir.
 Poisoning duration: 20
   #How long does the poisoning last (In seconds).
-Sprint: true
+Sprint: false
   #If the water is at level 3 or less, then the player cannot run.
 Damage: 3
   #Damage to player per second when water runs out.
 Actionbar: true
   #Water indicator above the toolbar. (true/false)
+Minimalismbar: false
+  #Action bar in the style of minimalism "-------------------"
 LowWaterMessage: You need to drink!
   #Message if the water indicator is off and the player is running out of water.
 HighWaterMessage: You don't want to drink anymore.
