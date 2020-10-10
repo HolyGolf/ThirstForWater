@@ -8,7 +8,7 @@ If you drink a bottle of water, there is a certain chance that you will get pois
 
 When you run, the water disappears faster.
 
-Purified water restores 7 points, and ordinary water restores 5 points.
+Purified water restores 35 points, and ordinary water restores 20 points.
 
 I recommend boiling water in the furnace ^-^
 
