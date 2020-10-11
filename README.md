@@ -32,7 +32,7 @@ When you are saturated with water, the indicator turns blue.
 
 ![placeholders](/images/6.png)
 
-![zero](/images/4.png)
+![zero](/images/44.png)
 
 If there are no points left, then you will start dying. Hooray!
 
