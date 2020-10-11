@@ -28,7 +28,7 @@ public void onEnable() {
 		if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
 			logger.info("There is not a new update available.");
 		} else {
-			logger.info("New version available at https://www.spigotmc.org/resources/thristforwater.84634/");
+			logger.info("New version available at https://www.spigotmc.org/resources/thirstforwater.84634/");
 		}
 	});
 

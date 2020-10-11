@@ -171,7 +171,7 @@ public void onPlayerJoin(PlayerJoinEvent player) {
 	if (player.getPlayer().isOp()) {
 		new UpdateChecker(plugin, 84634).getVersion(version -> { /*!!!!!!!!!Вставить id!!!!!!!!!*/
 			if (!plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
-				player.getPlayer().sendMessage(ChatColor.GOLD + "[ThirstForWater]: New version available at https://www.spigotmc.org/resources/thristforwater.84634/");
+				player.getPlayer().sendMessage(ChatColor.GOLD + "[ThirstForWater]: New version available at https://www.spigotmc.org/resources/thirstforwater.84634/");
 			}
 		});
 	}
