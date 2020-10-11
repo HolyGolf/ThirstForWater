@@ -21,12 +21,21 @@ If you have only 3 points of water left, then you cannot run. Unless, of course,
 ![zero](/images/4.png)
 
 If there are no points left, then you will start dying. Hooray!
+```yml
+PlaceHolders:
+
+%thirst_percents%
+%thirst_status%
+%thirst_indicator1%
+%thirst_indicator2%
+```
+![placeholders](/images/5.png)
 
 And of course you can customize a lot in the configuration file.
 
 ```yml
-Decrease rate: 60
-  #The speed at which a player leaves 7 points out of 100 points (In seconds).
+Decrease rate: 15
+  #The speed at which a player leaves 1 points out of 100 points (In seconds).
 Sprint rate: 10
   #The speed at which a player leaves 1 point of water when he sprinting (In seconds).
 Poisoning bottle chance: 50
@@ -43,6 +52,8 @@ Actionbar: true
   #Water indicator above the toolbar. (true/false)
 Minimalismbar: false
   #Action bar in the style of minimalism "-------------------"
+Messages: true
+  #Mesaage if the water indicator is off
 LowWaterMessage: You need to drink!
   #Message if the water indicator is off and the player is running out of water.
 HighWaterMessage: You don't want to drink anymore.
