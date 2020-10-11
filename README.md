@@ -18,9 +18,6 @@ Note: Remember that if you are AFK, then the water disappear anyway.
 ![bar](/images/3.png)
 If you have only 3 points of water left, then you cannot run. Unless, of course, you turn it off in the configs.
 
-![zero](/images/4.png)
-
-If there are no points left, then you will start dying. Hooray!
 ```yml
 PlaceHolders:
 
@@ -30,6 +27,10 @@ PlaceHolders:
 %thirst_indicator2%
 ```
 ![placeholders](/images/5.png)
+
+![zero](/images/4.png)
+
+If there are no points left, then you will start dying. Hooray!
 
 And of course you can customize a lot in the configuration file.
 
