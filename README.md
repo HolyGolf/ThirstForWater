@@ -2,7 +2,7 @@
 # ThristForWater
 This plugin adds a water thirst mechanic that can be quenched by drinking water from a bottle or directly from a reservoir.
 
-![craft](/images/2.png)
+![craft](/images/22.png)
 
 If you drink a bottle of water, there is a certain chance that you will get poisoned. You can also drink directly from the reservoir (Shift + Right Click on water), but if you are not the king of fortune, then you will get poisoned.
 
@@ -15,7 +15,7 @@ I recommend boiling water in the furnace ^-^
 ```yml
 Note: Remember that if you are AFK, then the water disappear anyway.
 ```
-![bar](/images/3.png)
+![bar](/images/33.png)
 If you have only 3 points of water left, then you cannot run. Unless, of course, you turn it off in the configs.
 
 ```yml
