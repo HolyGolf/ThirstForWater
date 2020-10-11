@@ -27,6 +27,7 @@ PlaceHolders:
 %thirst_indicator2%
 ```
 When you are saturated with water, the indicator turns blue.
+
 ![placeholders](/images/5.png)
 
 ![placeholders](/images/6.png)
