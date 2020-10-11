@@ -1,4 +1,4 @@
-[![logo](/images/1.png)](https://www.spigotmc.org/resources/thristforwater.84634/)
+[![logo](/images/1.png)](https://www.spigotmc.org/resources/thirstforwater.84634/)
 # ThristForWater
 This plugin adds a water thirst mechanic that can be quenched by drinking water from a bottle or directly from a reservoir.
 
