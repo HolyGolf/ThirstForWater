@@ -35,12 +35,18 @@ public void onEnable() {
 }
 
 public void loadevents() {
-	new events().addRecipe();
+	if (getConfig().getBoolean("CustomRecipe")) {
+		new events().addRecipe();
+	}
+	if (getConfig().getBoolean("Nether")) {
+		new events().thirst_nether();
+		new events().sprint_nether();
+	}
+	new events().sprint();
 	new events().thirst();
 	new events().message();
 	new events().damage();
 	new events().monitor();
-	new events().sprint();
 	new events().loadhashmap();
 }
 

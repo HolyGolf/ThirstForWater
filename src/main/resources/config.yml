@@ -2,22 +2,40 @@ Decrease rate: 15
   #The speed at which a player leaves 1 points out of 100 points (In seconds).
 Sprint rate: 10
   #The speed at which a player leaves 1 point of water when he sprinting (In seconds).
+#-------------------------------------------------------
+Nether: true
+  #Inclusion of different consumption in the World and Nether.
+Nether decrease rate: 11
+  #The speed at which a player leaves 1 points out of 100 points in the Nether (In seconds).
+Nether sprint rate: 6
+ #The speed at which a player leaves 1 point of water when he sprinting in the Nether (In seconds).
+#-------------------------------------------------------
 Poisoning bottle chance: 50
   #Chance to get poisoned when the player drinks a bottle of plain water.
 Poisoning water chance: 90
   #Chance to get poisoned when the player drinks water from the reservoir.
 Poisoning duration: 20
   #How long does the poisoning last (In seconds).
-Sprint: false
-  #If the water is at level 3 or less, then the player cannot run.
 Damage: 3
   #Damage to player per second when water runs out.
+WaterRecoveryBottle: 20
+  #
+WaterRecoveryClearWater: 35
+  #
+WaterRecoveryWater: 20
+  #
+#-------------------------------------------------------
+Sprint: false
+  #If the water is at level 3 or less, then the player cannot run.
+CustomRecipe: true
+  #Turn on or off the custom recipe for a clean water bottle.
 Actionbar: true
   #Water indicator above the toolbar. (true/false)
 Minimalismbar: false
   #Action bar in the style of minimalism "-------------------"
 Messages: true
   #Mesaage if the water indicator is off
+#-------------------------------------------------------
 LowWaterMessage: You need to drink!
   #Message if the water indicator is off and the player is running out of water.
 HighWaterMessage: You don't want to drink anymore.
@@ -27,4 +45,6 @@ WaterLore: The water in this bottle is purified.
 WaterName: Clear water bottle
   #The name of the pure water bottle.
   #Don't touch data. It's Player UUID : Amount of water.
+#-------------------------------------------------------
+debug: false
 data:
