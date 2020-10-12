@@ -6,11 +6,13 @@ This plugin adds a water thirst mechanic that can be quenched by drinking water 
 
 If you drink a bottle of water, there is a certain chance that you will get poisoned. You can also drink directly from the reservoir (Shift + Right Click on water), but if you are not the king of fortune, then you will get poisoned.
 
-When you run, the water disappears faster.
+- When you run, the water disappears faster.
 
-Purified water restores 35 points, and ordinary water restores 20 points.
+- In the default nether, water disappears a little faster =)
 
-I recommend boiling water in the furnace ^-^
+- Purified water restores 35 points, and ordinary water restores 20 points.
+
+- I recommend boiling water in the furnace ^-^
 
 ```yml
 Note: Remember that if you are AFK, then the water disappear anyway.
@@ -43,22 +45,40 @@ Decrease rate: 15
   #The speed at which a player leaves 1 points out of 100 points (In seconds).
 Sprint rate: 10
   #The speed at which a player leaves 1 point of water when he sprinting (In seconds).
+#-------------------------------------------------------
+Nether: true
+  #Inclusion of different consumption in the World and Nether.
+Nether decrease rate: 11
+  #The speed at which a player leaves 1 points out of 100 points in the Nether (In seconds).
+Nether sprint rate: 6
+ #The speed at which a player leaves 1 point of water when he sprinting in the Nether (In seconds).
+#-------------------------------------------------------
 Poisoning bottle chance: 50
   #Chance to get poisoned when the player drinks a bottle of plain water.
 Poisoning water chance: 90
   #Chance to get poisoned when the player drinks water from the reservoir.
 Poisoning duration: 20
   #How long does the poisoning last (In seconds).
-Sprint: false
-  #If the water is at level 3 or less, then the player cannot run.
 Damage: 3
   #Damage to player per second when water runs out.
+WaterRecoveryBottle: 20
+  #The amount of water added when drinking from a regular water bottle.
+WaterRecoveryClearWater: 35
+  #The amount of water added when drinking from a clean water bottle.
+WaterRecoveryWater: 20
+  #The amount of added water when drinking from the water block.
+#-------------------------------------------------------
+Sprint: false
+  #If the water is at level 3 or less, then the player cannot run.
+CustomRecipe: true
+  #Turn on or off the custom recipe for a clean water bottle.
 Actionbar: true
   #Water indicator above the toolbar. (true/false)
 Minimalismbar: false
   #Action bar in the style of minimalism "-------------------"
 Messages: true
   #Mesaage if the water indicator is off
+#-------------------------------------------------------
 LowWaterMessage: You need to drink!
   #Message if the water indicator is off and the player is running out of water.
 HighWaterMessage: You don't want to drink anymore.
@@ -68,5 +88,7 @@ WaterLore: The water in this bottle is purified.
 WaterName: Clear water bottle
   #The name of the pure water bottle.
   #Don't touch data. It's Player UUID : Amount of water.
+#-------------------------------------------------------
+debug: false
 data:
 ```
