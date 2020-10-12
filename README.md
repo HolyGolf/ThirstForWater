@@ -56,7 +56,7 @@ Nether sprint rate: 6
 Poisoning bottle chance: 50
   #Chance to get poisoned when the player drinks a bottle of plain water.
 Poisoning water chance: 90
-  #Chance to get poisoned when the player drinks water from the reservoir.
+  #Chance to get poisoned when the player drinks water from the water block.
 Poisoning duration: 20
   #How long does the poisoning last (In seconds).
 Damage: 3
@@ -87,8 +87,8 @@ WaterLore: The water in this bottle is purified.
   #Description of the clear water bottle.
 WaterName: Clear water bottle
   #The name of the pure water bottle.
-  #Don't touch data. It's Player UUID : Amount of water.
 #-------------------------------------------------------
 debug: false
+#Don't touch data. It's Player UUID : Amount of water.
 data:
 ```
