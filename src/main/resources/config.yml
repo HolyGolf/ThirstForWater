@@ -44,7 +44,7 @@ WaterLore: The water in this bottle is purified.
   #Description of the clear water bottle.
 WaterName: Clear water bottle
   #The name of the pure water bottle.
-  #Don't touch data. It's Player UUID : Amount of water.
 #-------------------------------------------------------
 debug: false
+#Don't touch data. It's Player UUID : Amount of water.
 data:

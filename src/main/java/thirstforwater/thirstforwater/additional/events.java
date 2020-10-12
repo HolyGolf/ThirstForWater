@@ -251,13 +251,10 @@ public void onPlayerJoin(PlayerJoinEvent player) {
 }
 
 @EventHandler
-public void sprint(PlayerToggleSprintEvent event) {
+public void sprint(PlayerMoveEvent event) {
 	if (event.getPlayer().isSprinting() && list.get(event.getPlayer().getUniqueId()) <= 19 && plugin.getConfig().getBoolean("Sprint")) {
 		event.setCancelled(true);
 		event.getPlayer().setSprinting(false);
-	} else {
-		event.setCancelled(false);
-		event.getPlayer().setSprinting(true);
 	}
 }
 
@@ -346,8 +343,8 @@ public void onInteract(PlayerInteractEvent event) {
 						event.getPlayer().sendMessage("Poisoning");
 					}
 				}
-				if ((list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryWater")) <= 110) {
-					int gg = list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryWater");
+				if ((list.get(event.getPlayer().getUniqueId()) + (plugin.getConfig().getInt("WaterRecoveryWater"))/2) <= 110) {
+					int gg = list.get(event.getPlayer().getUniqueId()) + (plugin.getConfig().getInt("WaterRecoveryWater")/2);
 					list.replace(event.getPlayer().getUniqueId(), gg);
 					if (plugin.getConfig().getBoolean("debug")) {
 						event.getPlayer().sendMessage("Added water, water");
