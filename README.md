@@ -28,6 +28,20 @@ PlaceHolders:
 %thirst_indicator1%
 %thirst_indicator2%
 ```
+```yml
+Commands:
+
+/tfw
+/tfw help
+/tfw reload
+/tfw settings
+```
+```yml
+Permissions:
+
+Thirstforwater.tfw.settings
+Thirstforwater.tfw.reload
+```
 When you are saturated with water, the indicator turns blue.
 
 ![placeholders](/images/5.png)
@@ -56,7 +70,7 @@ Nether sprint rate: 6
 Poisoning bottle chance: 50
   #Chance to get poisoned when the player drinks a bottle of plain water.
 Poisoning water chance: 90
-  #Chance to get poisoned when the player drinks water from the water block.
+  #Chance to get poisoned when the player drinks water from the reservoir.
 Poisoning duration: 20
   #How long does the poisoning last (In seconds).
 Damage: 3
@@ -69,7 +83,7 @@ WaterRecoveryWater: 20
   #The amount of added water when drinking from the water block.
 #-------------------------------------------------------
 Sprint: false
-  #If the water is at level 3 or less, then the player cannot run.
+  #If the water is at level 19 or less, then the player can't run.
 CustomRecipe: true
   #Turn on or off the custom recipe for a clean water bottle.
 Actionbar: true
@@ -77,8 +91,10 @@ Actionbar: true
 Minimalismbar: false
   #Action bar in the style of minimalism "-------------------"
 Messages: true
-  #Mesaage if the water indicator is off
+  #Messages if the water indicator is off
 #-------------------------------------------------------
+Nopermission: You have no permission to do this!
+  #Message if the player does not have permission to execute the command
 LowWaterMessage: You need to drink!
   #Message if the water indicator is off and the player is running out of water.
 HighWaterMessage: You don't want to drink anymore.
