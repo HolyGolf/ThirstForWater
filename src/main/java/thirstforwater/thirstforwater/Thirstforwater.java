@@ -16,6 +16,8 @@ public void onEnable() {
 	this.getLogger().info("ThirstForWater on!"); /*Сообщение о включении плагина в консоли*/
 	loadConfig(); /*Загрузка конфига*/
 	getServer().getPluginManager().registerEvents(new events(), this); /*Регистрация ивентов в другом классе*/
+	getServer().getPluginManager().registerEvents(new GUIListener(), this); /*Регистрация ивентов в другом классе*/
+	this.getCommand("tfw").setExecutor(new Commands());
 	loadevents();
 
 	if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){

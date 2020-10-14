@@ -26,7 +26,7 @@ WaterRecoveryWater: 20
   #The amount of added water when drinking from the water block.
 #-------------------------------------------------------
 Sprint: false
-  #If the water is at level 3 or less, then the player cannot run.
+  #If the water is at level 19 or less, then the player can't run.
 CustomRecipe: true
   #Turn on or off the custom recipe for a clean water bottle.
 Actionbar: true
@@ -34,8 +34,10 @@ Actionbar: true
 Minimalismbar: false
   #Action bar in the style of minimalism "-------------------"
 Messages: true
-  #Mesaage if the water indicator is off
+  #Messages if the water indicator is off
 #-------------------------------------------------------
+Nopermission: You have no permission to do this!
+  #Message if the player does not have permission to execute the command
 LowWaterMessage: You need to drink!
   #Message if the water indicator is off and the player is running out of water.
 HighWaterMessage: You don't want to drink anymore.

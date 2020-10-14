@@ -1,8 +1,23 @@
 name: ThirstforWater
-version: 1.5
+version: 1.6
 main: thirstforwater.thirstforwater.Thirstforwater
 api-version: 1.13
 authors: [HolyGolf]
 description: This plugin adds a thirst and drink system.
 website: https://github.com/HolyGolf
 softdepend: [PlaceholderAPI]
+commands:
+  tfw:
+    description: Help command
+    usage: /<command>
+  tfw help:
+    description: Help command
+    usage: /<command>
+  tfw settings:
+    description: Settings command
+    usage: /<command>
+    permission: Thirstforwater.tfw.settings
+  tfw reload:
+    description: Reload command
+    usage: /<command>
+    permission: Thirstforwater.tfw.reload

@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
@@ -50,7 +51,7 @@ public void thirst() {
 								if (list.get(p.getUniqueId()) > 0) {
 									int wt = list.get(p.getUniqueId()) - 1;
 									list.replace(p.getUniqueId(), wt);
-									if (plugin.getConfig().getBoolean("debug")) {
+									if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
 										p.sendMessage("world thirst Nether ON");
 									}
 								}
@@ -59,7 +60,7 @@ public void thirst() {
 							if (list.get(p.getUniqueId()) > 0) {
 								int wt = list.get(p.getUniqueId()) - 1;
 								list.replace(p.getUniqueId(), wt);
-								if (plugin.getConfig().getBoolean("debug")) {
+								if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
 									p.sendMessage("world thirst Nether OFF");
 								}
 							}
@@ -80,7 +81,7 @@ public void thirst_nether() {
 					if (list.get(p.getUniqueId()) > 0) {
 						int wt = list.get(p.getUniqueId()) - 1;
 						list.replace(p.getUniqueId(), wt);
-						if (plugin.getConfig().getBoolean("debug")) {
+						if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
 							p.sendMessage("Nether thirst");
 						}
 					}
@@ -121,7 +122,7 @@ public void sprint() {
 							 if (list.get(p.getUniqueId()) > 0) {
 								 int wt = list.get(p.getUniqueId()) - 1;
 								 list.replace(p.getUniqueId(), wt);
-								 if (plugin.getConfig().getBoolean("debug")) {
+								 if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
 									 p.sendMessage("world sprint Nether ON");
 								 }
 							 }
@@ -133,7 +134,7 @@ public void sprint() {
 							 if (list.get(p.getUniqueId()) > 0) {
 								 int wt = list.get(p.getUniqueId()) - 1;
 								 list.replace(p.getUniqueId(), wt);
-								 if (plugin.getConfig().getBoolean("debug")) {
+								 if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
 									 p.sendMessage("world sprint Nether OFF");
 								 }
 							 }
@@ -157,7 +158,7 @@ public void sprint_nether() {
 						if (list.get(p.getUniqueId()) > 0) {
 							int wt = list.get(p.getUniqueId()) - 1;
 							list.replace(p.getUniqueId(), wt);
-							if (plugin.getConfig().getBoolean("debug")) {
+							if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
 								p.sendMessage("nether sprint");
 							}
 						}
@@ -259,9 +260,25 @@ public void sprint(PlayerMoveEvent event) {
 }
 
 @EventHandler
+public void onClose(InventoryCloseEvent e){
+	Player player = (Player) e.getPlayer();
+	UUID playerUUID = player.getUniqueId();
+
+	GUI.openInventories.remove(playerUUID);
+}
+
+@EventHandler
+public void onQuit(PlayerQuitEvent e){
+	Player player = e.getPlayer();
+	UUID playerUUID = player.getUniqueId();
+
+	GUI.openInventories.remove(playerUUID);
+}
+
+@EventHandler
 public void onPlayerRespawn(PlayerRespawnEvent player){
 	list.replace(player.getPlayer().getUniqueId(), 110);
-	if (plugin.getConfig().getBoolean("debug")) {
+	if (plugin.getConfig().getBoolean("debug") && player.getPlayer().isOp()) {
 		player.getPlayer().sendMessage("Water restored");
 	}
 }
@@ -272,12 +289,12 @@ public void onPlayerEvent(PlayerItemConsumeEvent event) {
 		if ((list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryClearWater")) <= 110) {
 			int gg = list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryClearWater");
 			list.replace(event.getPlayer().getUniqueId(), gg);
-			if (plugin.getConfig().getBoolean("debug")) {
+			if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
 				event.getPlayer().sendMessage("Added water, clear water");
 			}
 		} else {
 			list.replace(event.getPlayer().getUniqueId(), 110);
-			if (plugin.getConfig().getBoolean("debug")) {
+			if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
 				event.getPlayer().sendMessage("Added water, full, clear water");
 			}
 		}
@@ -288,19 +305,19 @@ public void onPlayerEvent(PlayerItemConsumeEvent event) {
 				int ran = r.nextInt(101);
 				if (ran <= plugin.getConfig().getInt("Poisoning bottle chance")) {
 					event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, (plugin.getConfig().getInt("Poisoning duration") * 20 ), 1));
-					if (plugin.getConfig().getBoolean("debug")) {
+					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
 						event.getPlayer().sendMessage("Poisoning");
 					}
 				}
 				if ((list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryBottle")) <= 110) {
 					int gg = list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryBottle");
 					list.replace(event.getPlayer().getUniqueId(), gg);
-					if (plugin.getConfig().getBoolean("debug")) {
+					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
 						event.getPlayer().sendMessage("Added water, bottle");
 					}
 				} else {
 					list.replace(event.getPlayer().getUniqueId(), 110);
-					if (plugin.getConfig().getBoolean("debug")) {
+					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
 						event.getPlayer().sendMessage("Added water, full, bottle");
 					}
 				}
@@ -339,19 +356,19 @@ public void onInteract(PlayerInteractEvent event) {
 				int ran = r.nextInt(101);
 				if (ran <= plugin.getConfig().getInt("Poisoning water chance")) {
 					event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, (plugin.getConfig().getInt("Poisoning duration") * 20), 1));
-					if (plugin.getConfig().getBoolean("debug")) {
+					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
 						event.getPlayer().sendMessage("Poisoning");
 					}
 				}
 				if ((list.get(event.getPlayer().getUniqueId()) + (plugin.getConfig().getInt("WaterRecoveryWater"))/2) <= 110) {
 					int gg = list.get(event.getPlayer().getUniqueId()) + (plugin.getConfig().getInt("WaterRecoveryWater")/2);
 					list.replace(event.getPlayer().getUniqueId(), gg);
-					if (plugin.getConfig().getBoolean("debug")) {
+					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
 						event.getPlayer().sendMessage("Added water, water");
 					}
 				} else {
 					list.replace(event.getPlayer().getUniqueId(), 110);
-					if (plugin.getConfig().getBoolean("debug")) {
+					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
 						event.getPlayer().sendMessage("Added water, full, water");
 					}
 				}
@@ -384,6 +401,7 @@ public void savehashmap(){
 	if (plugin.getConfig().getBoolean("debug")) {
 		Bukkit.broadcastMessage("Hashmap saved");
 	}
+	plugin.reloadConfig();
 	plugin.getConfig().set("data", hashmapData);
 	plugin.saveConfig();
 }
