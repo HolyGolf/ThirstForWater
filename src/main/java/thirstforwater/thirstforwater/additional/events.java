@@ -45,7 +45,7 @@ public void thirst() {
 		@Override
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) {
+				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) {
 						if (plugin.getConfig().getBoolean("Nether")) {
 							if (!p.getLocation().getWorld().getName().endsWith("_nether")) {
 								if (list.get(p.getUniqueId()) > 0) {
@@ -77,7 +77,7 @@ public void thirst_nether() {
 		@Override
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) && p.getLocation().getWorld().getName().endsWith("_nether")) {
+				if (((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) && p.getLocation().getWorld().getName().endsWith("_nether")) {
 					if (list.get(p.getUniqueId()) > 0) {
 						int wt = list.get(p.getUniqueId()) - 1;
 						list.replace(p.getUniqueId(), wt);
@@ -96,7 +96,7 @@ public void message() {
 		@Override
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) {
+				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) {
 						if (!plugin.getConfig().getBoolean("Actionbar") && plugin.getConfig().getBoolean("Messages")) {
 							if (list.get(p.getUniqueId()) < 20) {
 								p.sendMessage(ChatColor.RED + plugin.getConfig().getString("LowWaterMessage"));
@@ -117,7 +117,7 @@ public void sprint() {
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				 if (plugin.getConfig().getBoolean("Nether")) {
-					 if (((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) && !p.getLocation().getWorld().getName().endsWith("_nether")) {
+					 if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && !p.getLocation().getWorld().getName().endsWith("_nether")) {
 						 if (p.isSprinting()) {
 							 if (list.get(p.getUniqueId()) > 0) {
 								 int wt = list.get(p.getUniqueId()) - 1;
@@ -153,7 +153,7 @@ public void sprint_nether() {
 		@Override
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) && p.getLocation().getWorld().getName().endsWith("_nether")) {
+				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && p.getLocation().getWorld().getName().endsWith("_nether")) {
 					if (p.isOnline() && p.isSprinting()) {
 						if (list.get(p.getUniqueId()) > 0) {
 							int wt = list.get(p.getUniqueId()) - 1;
@@ -174,7 +174,7 @@ public void damage(){
 		@Override
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) {
+				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) {
 						if (list.get(p.getUniqueId()) <= 0) {
 							if (p.getHealth() > 0 && list.get(p.getUniqueId()) <= 0) {
 								p.damage(plugin.getConfig().getInt("Damage"));
@@ -195,7 +195,7 @@ public void monitor() {
 		@Override
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) {
+				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) {
 						if (plugin.getConfig().getBoolean("Actionbar")) {
 							if (!plugin.getConfig().getBoolean("Minimalismbar")) {
 								if (list.get(p.getUniqueId()) <= 0) {

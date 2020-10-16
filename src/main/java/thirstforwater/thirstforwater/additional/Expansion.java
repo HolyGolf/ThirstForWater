@@ -40,7 +40,7 @@ public String getIdentifier(){
 
 @Override
 public String getVersion(){
-	return "1.5";
+	return "1.7";
 }
 
 @Override
