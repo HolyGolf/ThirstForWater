@@ -41,6 +41,7 @@ Permissions:
 
 Thirstforwater.tfw.settings
 Thirstforwater.tfw.reload
+thirstforwater.nothirst - With these rights, the player is not subject to the thirst system.
 ```
 When you are saturated with water, the indicator turns blue.
 
