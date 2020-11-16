@@ -1,3 +1,5 @@
+Plugin: true
+  #Enable/Disable plugin
 Decrease rate: 15
   #The speed at which a player leaves 1 points out of 100 points (In seconds).
 Sprint rate: 10
@@ -35,6 +37,8 @@ Minimalismbar: false
   #Action bar in the style of minimalism "-------------------"
 Messages: true
   #Messages if the water indicator is off
+Vip: true
+  #vip permission enable/disable
 #-------------------------------------------------------
 Nopermission: You have no permission to do this!
   #Message if the player does not have permission to execute the command

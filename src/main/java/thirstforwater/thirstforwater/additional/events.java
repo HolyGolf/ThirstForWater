@@ -45,7 +45,7 @@ public void thirst() {
 		@Override
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) {
+				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && (!p.hasPermission("Thirstforwater.tfw.vip"))) {
 						if (plugin.getConfig().getBoolean("Nether")) {
 							if (!p.getLocation().getWorld().getName().endsWith("_nether")) {
 								if (list.get(p.getUniqueId()) > 0) {
@@ -77,7 +77,7 @@ public void thirst_nether() {
 		@Override
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) && p.getLocation().getWorld().getName().endsWith("_nether")) {
+				if (((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) && p.getLocation().getWorld().getName().endsWith("_nether") && (!p.hasPermission("Thirstforwater.tfw.vip"))) {
 					if (list.get(p.getUniqueId()) > 0) {
 						int wt = list.get(p.getUniqueId()) - 1;
 						list.replace(p.getUniqueId(), wt);
@@ -117,7 +117,7 @@ public void sprint() {
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				 if (plugin.getConfig().getBoolean("Nether")) {
-					 if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && !p.getLocation().getWorld().getName().endsWith("_nether")) {
+					 if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && !p.getLocation().getWorld().getName().endsWith("_nether") && (!p.hasPermission("Thirstforwater.tfw.vip"))) {
 						 if (p.isSprinting()) {
 							 if (list.get(p.getUniqueId()) > 0) {
 								 int wt = list.get(p.getUniqueId()) - 1;
@@ -129,7 +129,7 @@ public void sprint() {
 						 }
 					 }
 				 } else {
-					 if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE)) {
+					 if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE) && (!p.hasPermission("Thirstforwater.tfw.vip"))) {
 						 if (p.isSprinting()) {
 							 if (list.get(p.getUniqueId()) > 0) {
 								 int wt = list.get(p.getUniqueId()) - 1;
@@ -153,7 +153,7 @@ public void sprint_nether() {
 		@Override
 		public void run() {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && p.getLocation().getWorld().getName().endsWith("_nether")) {
+				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && p.getLocation().getWorld().getName().endsWith("_nether") && (!p.hasPermission("Thirstforwater.tfw.vip"))) {
 					if (p.isOnline() && p.isSprinting()) {
 						if (list.get(p.getUniqueId()) > 0) {
 							int wt = list.get(p.getUniqueId()) - 1;
@@ -168,6 +168,120 @@ public void sprint_nether() {
 		}
 	}, 0L, spr);
 }
+
+//I hate coding
+// --------------------------------------------------------------------------
+public void thirst_vip() {
+	int time = (plugin.getConfig().getInt("Decrease rate") * 20) * 2;
+	idt = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+		@Override
+		public void run() {
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && (p.hasPermission("Thirstforwater.tfw.vip"))) {
+					if (plugin.getConfig().getBoolean("Nether")) {
+						if (!p.getLocation().getWorld().getName().endsWith("_nether")) {
+							if (list.get(p.getUniqueId()) > 0) {
+								int wt = list.get(p.getUniqueId()) - 1;
+								list.replace(p.getUniqueId(), wt);
+								if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
+									p.sendMessage("world thirst Nether ON");
+								}
+							}
+						}
+					} else {
+						if (list.get(p.getUniqueId()) > 0) {
+							int wt = list.get(p.getUniqueId()) - 1;
+							list.replace(p.getUniqueId(), wt);
+							if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
+								p.sendMessage("world thirst Nether OFF");
+							}
+						}
+					}
+				}
+			}
+		}
+	}, 0L, time);
+}
+
+public void thirst_nether_vip() {
+	int time = (plugin.getConfig().getInt("Nether decrease rate") * 20) * 2;
+	idt5 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+		@Override
+		public void run() {
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				if (((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) && p.getLocation().getWorld().getName().endsWith("_nether") && (p.hasPermission("Thirstforwater.tfw.vip"))) {
+					if (list.get(p.getUniqueId()) > 0) {
+						int wt = list.get(p.getUniqueId()) - 1;
+						list.replace(p.getUniqueId(), wt);
+						if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
+							p.sendMessage("Nether thirst");
+						}
+					}
+				}
+			}
+		}
+	}, 0L, time);
+}
+
+public void sprint_vip() {
+	int spr = (plugin.getConfig().getInt("Sprint rate") * 20) * 2;
+	idt4 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+		@Override
+		public void run() {
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				if (plugin.getConfig().getBoolean("Nether")) {
+					if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && !p.getLocation().getWorld().getName().endsWith("_nether") && (p.hasPermission("Thirstforwater.tfw.vip"))) {
+						if (p.isSprinting()) {
+							if (list.get(p.getUniqueId()) > 0) {
+								int wt = list.get(p.getUniqueId()) - 1;
+								list.replace(p.getUniqueId(), wt);
+								if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
+									p.sendMessage("world sprint Nether ON VIP");
+								}
+							}
+						}
+					}
+				} else {
+					if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE) && (p.hasPermission("Thirstforwater.tfw.vip"))) {
+						if (p.isSprinting()) {
+							if (list.get(p.getUniqueId()) > 0) {
+								int wt = list.get(p.getUniqueId()) - 1;
+								list.replace(p.getUniqueId(), wt);
+								if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
+									p.sendMessage("world sprint Nether OFF VIP");
+								}
+							}
+
+						}
+					}
+				}
+			}
+		}
+	}, 0L, spr);
+}
+
+public void sprint_nether_vip() {
+	int spr = (plugin.getConfig().getInt("Nether sprint rate") * 20) * 2;
+	idt7 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+		@Override
+		public void run() {
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && p.getLocation().getWorld().getName().endsWith("_nether")) {
+					if (p.isOnline() && p.isSprinting() && p.hasPermission("Thirstforwater.tfw.vip")) {
+						if (list.get(p.getUniqueId()) > 0) {
+							int wt = list.get(p.getUniqueId()) - 1;
+							list.replace(p.getUniqueId(), wt);
+							if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
+								p.sendMessage("nether sprint VIP");
+							}
+						}
+					}
+				}
+			}
+		}
+	}, 0L, spr);
+}
+// --------------------------------------------------------------------------
 
 public void damage(){
 	idt3 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
@@ -260,6 +374,16 @@ public void sprint(PlayerMoveEvent event) {
 }
 
 @EventHandler
+public void sprinting(PlayerToggleSprintEvent event) {
+	if (event.getPlayer().isSprinting() && list.get(event.getPlayer().getUniqueId()) <= 19 && plugin.getConfig().getBoolean("Sprint")) {
+		event.setCancelled(true);
+		event.getPlayer().setSprinting(false);
+	}
+}
+
+// #sad_coding_day
+
+@EventHandler
 public void onClose(InventoryCloseEvent e){
 	Player player = (Player) e.getPlayer();
 	UUID playerUUID = player.getUniqueId();
@@ -283,6 +407,7 @@ public void onPlayerRespawn(PlayerRespawnEvent player){
 	}
 }
 
+// I don't know how this works, but this works. Nice.
 @EventHandler
 public void onPlayerEvent(PlayerItemConsumeEvent event) {
 	if (event.getItem().getType() == Material.POTION && event.getItem().hasItemMeta() && event.getItem().getItemMeta().hasDisplayName() && event.getItem().getItemMeta().hasLore() && event.getItem().getItemMeta().getLore().contains(ChatColor.AQUA + plugin.getConfig().getString("WaterLore")) && event.getItem().getItemMeta().getDisplayName().equals(ChatColor.AQUA + plugin.getConfig().getString("WaterName"))) {
@@ -325,6 +450,8 @@ public void onPlayerEvent(PlayerItemConsumeEvent event) {
 	}
 }
 
+// No_Nut_November is HERE!
+
 public void addRecipe() {
 	ItemStack water = new ItemStack(Material.POTION, 1, (byte)0);
 	Material wat = water.getType();
@@ -345,7 +472,6 @@ public void addRecipe() {
 
 @EventHandler
 public void onInteract(PlayerInteractEvent event) {
-
 	Action action = event.getAction();
 	Player player = event.getPlayer();
 	if (event.getItem() == null && (action.equals(Action.RIGHT_CLICK_BLOCK) || event.getAction() == RIGHT_CLICK_AIR) && player.isSneaking()) {

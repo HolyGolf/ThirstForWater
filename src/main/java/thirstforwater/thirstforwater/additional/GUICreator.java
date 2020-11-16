@@ -5,8 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import thirstforwater.thirstforwater.Thirstforwater;
 
-import java.util.HashMap;
-
 public class GUICreator extends GUI {
 private Thirstforwater plugin = Thirstforwater.getPlugin(Thirstforwater.class);
 
@@ -271,6 +269,19 @@ public GUICreator() {
 			new GUICreator().open(player);
 		} else if (!plugin.getConfig().getBoolean("Messages")) {
 			plugin.getConfig().set("Messages", true);
+			plugin.saveConfig();
+			plugin.reloadConfig();
+			new GUICreator().open(player);
+		}
+	});
+	setItem(38, new ItemStack(Material.GOLD_INGOT), ChatColor.GOLD + "Vip permission: " + plugin.getConfig().getString("Vip"), player -> {
+		if (plugin.getConfig().getBoolean("Vip")) {
+			plugin.getConfig().set("Vip", false);
+			plugin.saveConfig();
+			plugin.reloadConfig();
+			new GUICreator().open(player);
+		} else if (!plugin.getConfig().getBoolean("Vip")) {
+			plugin.getConfig().set("Vip", true);
 			plugin.saveConfig();
 			plugin.reloadConfig();
 			new GUICreator().open(player);

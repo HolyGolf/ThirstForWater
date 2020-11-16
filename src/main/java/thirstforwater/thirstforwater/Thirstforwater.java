@@ -37,19 +37,29 @@ public void onEnable() {
 }
 
 public void loadevents() {
-	if (getConfig().getBoolean("CustomRecipe")) {
-		new events().addRecipe();
+	if (getConfig().getBoolean("Plugin")) {
+		if (getConfig().getBoolean("CustomRecipe")) {
+			new events().addRecipe();
+		}
+		if (getConfig().getBoolean("Nether")) {
+			new events().thirst_nether();
+			new events().sprint_nether();
+			if (getConfig().getBoolean("Vip")) {
+				new events().thirst_nether_vip();
+				new events().sprint_nether_vip();
+			}
+		}
+		new events().sprint();
+		new events().thirst();
+		new events().message();
+		new events().damage();
+		new events().monitor();
+		new events().loadhashmap();
+		if (getConfig().getBoolean("Vip")) {
+			new events().sprint_vip();
+			new events().thirst_vip();
+		}
 	}
-	if (getConfig().getBoolean("Nether")) {
-		new events().thirst_nether();
-		new events().sprint_nether();
-	}
-	new events().sprint();
-	new events().thirst();
-	new events().message();
-	new events().damage();
-	new events().monitor();
-	new events().loadhashmap();
 }
 
 @Override

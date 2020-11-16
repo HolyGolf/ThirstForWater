@@ -1,5 +1,5 @@
 name: ThirstforWater
-version: 1.7
+version: 1.8
 main: thirstforwater.thirstforwater.Thirstforwater
 api-version: 1.13
 authors: [HolyGolf]
@@ -21,3 +21,7 @@ commands:
     description: Reload command
     usage: /<command>
     permission: Thirstforwater.tfw.reload
+  tfw vip:
+    description: With this permission, thirst is spent longer (x2 slower)
+    usage: /<command>
+    permission: Thirstforwater.tfw.vip
