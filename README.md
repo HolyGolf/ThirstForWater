@@ -33,15 +33,17 @@ Commands:
 
 /tfw
 /tfw help
-/tfw reload
-/tfw settings
+/tfw reload (Thirstforwater.tfw.reload)
+/tfw settings (Thirstforwater.tfw.settings).
+/tfw enable | disable (Thirstforwater.tfw.settings).
 ```
 ```yml
 Permissions:
 
 Thirstforwater.tfw.settings
 Thirstforwater.tfw.reload
-thirstforwater.nothirst - With this permission, the player's thirst is not reduced.
+thirstforwater.nothirst - With this permission, the player's thirst is not reduced
+Thirstforwater.tfw.vip - With this permission, thirst is spent longer (x2 slower)
 ```
 When you are saturated with water, the indicator turns blue.
 
@@ -56,6 +58,8 @@ If there are no points left, then you will start dying. Hooray!
 And of course you can customize a lot in the configuration file.
 
 ```yml
+Plugin: true
+  #Enable/Disable plugin
 Decrease rate: 15
   #The speed at which a player leaves 1 points out of 100 points (In seconds).
 Sprint rate: 10
@@ -66,7 +70,7 @@ Nether: true
 Nether decrease rate: 11
   #The speed at which a player leaves 1 points out of 100 points in the Nether (In seconds).
 Nether sprint rate: 6
- #The speed at which a player leaves 1 point of water when he sprinting in the Nether (In seconds).
+#The speed at which a player leaves 1 point of water when he sprinting in the Nether (In seconds).
 #-------------------------------------------------------
 Poisoning bottle chance: 50
   #Chance to get poisoned when the player drinks a bottle of plain water.
@@ -93,6 +97,8 @@ Minimalismbar: false
   #Action bar in the style of minimalism "-------------------"
 Messages: true
   #Messages if the water indicator is off
+Vip: true
+  #vip permission enable/disable
 #-------------------------------------------------------
 Nopermission: You have no permission to do this!
   #Message if the player does not have permission to execute the command
