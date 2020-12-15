@@ -39,15 +39,18 @@ public void onEnable() {
 }
 
 public void metrcs(){
-	int pluginId = 9654;
+	int pluginId = 9655;
 	Metrics metrics = new Metrics(this, pluginId);
-	metrics.addCustomChart(new Metrics.MultiLineChart("players_and_servers", new Callable<Map<String, Integer>>() {
+	metrics.addCustomChart(new Metrics.SingleLineChart("players", new Callable<Integer>() {
 		@Override
-		public Map<String, Integer> call() throws Exception {
-			Map<String, Integer> valueMap = new HashMap<>();
-			valueMap.put("servers", 1);
-			valueMap.put("players", Bukkit.getOnlinePlayers().size());
-			return valueMap;
+		public Integer call() throws Exception {
+			return Bukkit.getOnlinePlayers().size();
+		}
+	}));
+	metrics.addCustomChart(new Metrics.SingleLineChart("servers", new Callable<Integer>() {
+		@Override
+		public Integer call() throws Exception {
+			return 1;
 		}
 	}));
 }

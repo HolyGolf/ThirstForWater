@@ -31,7 +31,7 @@ public String getIdentifier(){
 
 @Override
 public String getVersion(){
-	return "1.9";
+	return "2";
 }
 
 @Override
