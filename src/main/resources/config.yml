@@ -1,17 +1,22 @@
 Plugin: true
   #Enable/Disable plugin
-Decrease rate: 15
-  #The speed at which a player leaves 1 points out of 100 points (In seconds).
-Sprint rate: 10
-  #The speed at which a player leaves 1 point of water when he sprinting (In seconds).
+
+Enabled_Worlds:
+  - world:15
+  - world_nether:11
+  - world_the_end:15
+
+#World : Time for which thirst will increase at a normal pace (Seconds)
+
+SprintRate_Worlds:
+  - world:6
+  - world_nether:4
+  - world_the_end:6
+
+#World : Time for which thirst will increase when running (Seconds)
+
 #-------------------------------------------------------
-Nether: true
-  #Inclusion of different consumption in the World and Nether.
-Nether decrease rate: 11
-  #The speed at which a player leaves 1 points out of 100 points in the Nether (In seconds).
-Nether sprint rate: 6
- #The speed at which a player leaves 1 point of water when he sprinting in the Nether (In seconds).
-#-------------------------------------------------------
+
 Poisoning bottle chance: 50
   #Chance to get poisoned when the player drinks a bottle of plain water.
 Poisoning water chance: 90
@@ -26,31 +31,48 @@ WaterRecoveryClearWater: 35
   #The amount of water added when drinking from a clean water bottle.
 WaterRecoveryWater: 20
   #The amount of added water when drinking from the water block.
+
 #-------------------------------------------------------
+
 Sprint: false
   #If the water is at level 19 or less, then the player can't run.
 CustomRecipe: true
   #Turn on or off the custom recipe for a clean water bottle.
 Actionbar: true
   #Water indicator above the toolbar. (true/false)
-Minimalismbar: false
-  #Action bar in the style of minimalism "-------------------"
+
+Indicator_full: '&6&l}|&1####################&6&l|{'
+Indicator_empty: '&6&l}|&4---------------------&6&l|{'
+Char1: '&9#'
+Char2: '&8-'
+Char_before_Indicator: '&6&l}|'
+Char_after_Indicator: '&6&l|{'
+
+PlaceHolder_Indicator2_Indicator_full: '&6&l}|&1####################&6&l|{'
+PlaceHolder_Indicator2_Indicator_empty: '&6&l}|&4---------------------&6&l|{'
+PlaceHolder_Indicator2_Char1: '&9#'
+PlaceHolder_Indicator2_Char2: '&8-'
+PlaceHolder_Indicator2_Char_before_Indicator: '&6&l}|'
+PlaceHolder_Indicator2_Char_after_Indicator: '&6&l|{'
+
 Messages: true
   #Messages if the water indicator is off
-Vip: true
-  #vip permission enable/disable
+
 #-------------------------------------------------------
-Nopermission: You have no permission to do this!
+
+Nopermission: '&cYou have no permission to do this!'
   #Message if the player does not have permission to execute the command
-LowWaterMessage: You need to drink!
+LowWaterMessage: '&cYou need to drink!'
   #Message if the water indicator is off and the player is running out of water.
-HighWaterMessage: You don't want to drink anymore.
+HighWaterMessage: '&aYou dont want to drink anymore.'
   #Message if the water indicator is off and the player has drunk enough water.
-WaterLore: The water in this bottle is purified.
+WaterLore: '&aThe water in this bottle is purified.'
   #Description of the clear water bottle.
-WaterName: Clear water bottle
+WaterName: '&bClear water bottle'
   #The name of the pure water bottle.
+
 #-------------------------------------------------------
+
 debug: false
 #Don't touch data. It's Player UUID : Amount of water.
 data:

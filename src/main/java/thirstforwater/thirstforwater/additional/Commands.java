@@ -10,11 +10,10 @@ import thirstforwater.thirstforwater.Thirstforwater;
 public class Commands implements CommandExecutor {
 private Thirstforwater plugin = Thirstforwater.getPlugin(Thirstforwater.class);
 private events pl = new events();
-private GUICreator GUIcreator;
 
 @Override
 public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-	GUIcreator = new GUICreator();
+	GUICreator GUIcreator = new GUICreator();
 	if (sender instanceof Player) {
 		if (args.length == 0 || args[0].equals("help")) {
 			sender.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "--------------\n" + ChatColor.GOLD + "/tfw help - help\n/tfw reload - reload plugin\n/tfw settings - GUI config settings" + ChatColor.AQUA + "" + ChatColor.BOLD + "\n--------------");
@@ -26,35 +25,39 @@ public boolean onCommand(CommandSender sender, Command command, String label, St
 				plugin.getServer().getPluginManager().enablePlugin(plugin);
 				sender.sendMessage(ChatColor.GOLD + "[ThirstForWater]: Plugin reloaded");
 			} else {
-				sender.sendMessage(ChatColor.RED + plugin.getConfig().getString("Nopermission"));
+				String txt = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
+				sender.sendMessage(txt);
 			}
 			return true;
 		} else if (args[0].equals("settings")) {
 			if (sender.isOp() || sender.hasPermission("Thirstforwater.tfw.settings")) {
 				GUIcreator.open(((Player) sender).getPlayer());
 			} else {
-				sender.sendMessage(ChatColor.RED + plugin.getConfig().getString("Nopermission"));
+				String txt = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
+				sender.sendMessage(txt);
 			}
 			return true;
 		} else if (args[0].equals("disable")) {
 			if (sender.isOp() || sender.hasPermission("Thirstforwater.tfw.settings")) {
-			plugin.getConfig().set("Plugin", false);
-			pl.savehashmap();
-			plugin.getServer().getPluginManager().disablePlugin(plugin);
-			plugin.getServer().getPluginManager().enablePlugin(plugin);
-			sender.sendMessage(ChatColor.RED + "ThirstForWater disabled");
+				plugin.getConfig().set("Plugin", false);
+				pl.savehashmap();
+				plugin.getServer().getPluginManager().disablePlugin(plugin);
+				plugin.getServer().getPluginManager().enablePlugin(plugin);
+				sender.sendMessage(ChatColor.RED + "ThirstForWater disabled");
 			} else {
-				sender.sendMessage(ChatColor.RED + plugin.getConfig().getString("Nopermission"));
+				String txt = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
+				sender.sendMessage(txt);
 			}
 		} else if (args[0].equals("enable")) {
 			if (sender.isOp() || sender.hasPermission("Thirstforwater.tfw.settings")) {
-			plugin.getConfig().set("Plugin", true);
-			pl.savehashmap();
-			plugin.getServer().getPluginManager().disablePlugin(plugin);
-			plugin.getServer().getPluginManager().enablePlugin(plugin);
-			sender.sendMessage(ChatColor.RED + "ThirstForWater enabled");
+				plugin.getConfig().set("Plugin", true);
+				pl.savehashmap();
+				plugin.getServer().getPluginManager().disablePlugin(plugin);
+				plugin.getServer().getPluginManager().enablePlugin(plugin);
+				sender.sendMessage(ChatColor.RED + "ThirstForWater enabled");
 			} else {
-				sender.sendMessage(ChatColor.RED + plugin.getConfig().getString("Nopermission"));
+				String txt = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
+				sender.sendMessage(txt);
 			}
 		} else {
 			sender.sendMessage(ChatColor.RED + "[ThirstForWater]: What?!");

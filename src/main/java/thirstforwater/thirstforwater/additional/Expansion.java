@@ -5,15 +5,6 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import thirstforwater.thirstforwater.Thirstforwater;
 
-/**
- * This class will automatically register as a placeholder expansion
- * when a jar including this class is added to the directory
- * {@code /plugins/PlaceholderAPI/expansions} on your server.
- * <br>
- * <br>If you create such a class inside your own plugin, you have to
- * register it manually in your plugins {@code onEnable()} by using
- * {@code new YourExpansionClass().register();}
- */
 public class Expansion extends PlaceholderExpansion {
 private Thirstforwater plugin;
 
@@ -40,7 +31,7 @@ public String getIdentifier(){
 
 @Override
 public String getVersion(){
-	return "1.8";
+	return "1.9";
 }
 
 @Override
@@ -73,35 +64,37 @@ public String onPlaceholderRequest(Player player, String identifier){
 	}
 	if(identifier.equals("indicator1")) {
 		if (events.list.get(player.getUniqueId()) > 100) {
-			return ChatColor.BLUE + "--------------------";
+			return ChatColor.DARK_BLUE + "--------------------";
 		} else if (events.list.get(player.getUniqueId()) <= 0) {
 			return ChatColor.DARK_RED + "--------------------";
 		} else if (events.list.get(player.getUniqueId()) <= 19) {
 			return getProgressBar(events.list.get(player.getUniqueId()), 100, 20, '-', '-', ChatColor.RED, ChatColor.DARK_GRAY);
 		} else {
-			return getProgressBar(events.list.get(player.getUniqueId()), 100, 20, '-', '-', ChatColor.AQUA, ChatColor.DARK_GRAY);
+			return getProgressBar(events.list.get(player.getUniqueId()), 100, 20, '-', '-', ChatColor.BLUE, ChatColor.DARK_GRAY);
 		}
 	}
 	if(identifier.equals("indicator2")) {
 		if (events.list.get(player.getUniqueId()) > 100) {
-			return ChatColor.BLUE + "####################";
+			return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("PlaceHolder_Indicator2_Indicator_full"));
 		} else if (events.list.get(player.getUniqueId()) <= 0) {
-			return ChatColor.DARK_RED + "--------------------";
-		} else if (events.list.get(player.getUniqueId()) <= 19) {
-			return getProgressBar(events.list.get(player.getUniqueId()), 100, 20, '#', '-', ChatColor.RED, ChatColor.DARK_GRAY);
+			return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("PlaceHolder_Indicator2_Indicator_empty"));
 		} else {
-			return getProgressBar(events.list.get(player.getUniqueId()), 100, 20, '#', '-', ChatColor.AQUA, ChatColor.DARK_GRAY);
+			return ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("PlaceHolder_Indicator2_Char_before_Indicator")) + getProgressBar2(events.list.get(player.getUniqueId()), 100, 20) + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("PlaceHolder_Indicator2_Char_after_Indicator"));
 		}
 	}
 
 	return null;
 }
-public String getProgressBar(int current, int max, int totalBars, char symbol1, char symbol2, ChatColor completedColor,
-							 ChatColor notCompletedColor) {
+public String getProgressBar(int current, int max, int totalBars, char symbol1, char symbol2, ChatColor completedColor, ChatColor notCompletedColor) {
 	float percent = (float) current / max;
 	int progressBars = (int) (totalBars * percent);
 
 	return Strings.repeat("" + completedColor + symbol1, progressBars)
 			+ Strings.repeat("" + notCompletedColor + symbol2, totalBars - progressBars);
+}
+public String getProgressBar2(int current, int max, int totalBars) {
+	float percent = (float) current / max;
+	int progressBars = (int) (totalBars * percent);
+	return Strings.repeat("" + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("PlaceHolder_Indicator2_Char1")), progressBars) + Strings.repeat("" + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("PlaceHolder_Indicator2_Char2")), totalBars - progressBars);
 }
 }

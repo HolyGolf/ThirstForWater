@@ -31,324 +31,134 @@ import static org.bukkit.event.block.Action.RIGHT_CLICK_AIR;
 public class events implements Listener {
 	private Thirstforwater plugin = Thirstforwater.getPlugin(Thirstforwater.class);
 	public static HashMap<UUID, Integer> list = new HashMap<>();
+	public static HashMap<String, Integer> worlds = new HashMap<>();
+	public static HashMap<UUID, Double> sprint = new HashMap<>();
+	public static HashMap<String, Integer> worlds_sprint = new HashMap<>();
+	public static HashMap<UUID, Double> time = new HashMap<>();
 	public static int idt;
 	public static int idt2;
-	public static int idt3;
-	public static int idt4;
-	public static int idt5;
-	public static int idt6;
-	public static int idt7;
+
 
 public void thirst() {
-	int time = plugin.getConfig().getInt("Decrease rate") * 20;
-	idt = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-		@Override
-		public void run() {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && (!p.hasPermission("Thirstforwater.tfw.vip"))) {
-						if (plugin.getConfig().getBoolean("Nether")) {
-							if (!p.getLocation().getWorld().getName().endsWith("_nether")) {
-								if (list.get(p.getUniqueId()) > 0) {
-									int wt = list.get(p.getUniqueId()) - 1;
-									list.replace(p.getUniqueId(), wt);
-									if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-										p.sendMessage("world thirst Nether ON");
-									}
-								}
+	idt = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) {
+				if (!sprint.containsKey(p.getUniqueId())) {
+					sprint.put(p.getUniqueId(), 0.0);
+					if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+						p.sendMessage(ChatColor.GRAY + "Sprint put me");
+					}
+				} else {
+					if (p.isSprinting()) {
+						if (p.hasPermission("Thirstforwater.tfw.vip")) {
+							double spr = sprint.get(p.getUniqueId()) + 0.5;
+							sprint.replace(p.getUniqueId(), spr);
+							if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+								p.sendMessage(ChatColor.GREEN + "Sprint +0.5 second");
 							}
 						} else {
-							if (list.get(p.getUniqueId()) > 0) {
-								int wt = list.get(p.getUniqueId()) - 1;
-								list.replace(p.getUniqueId(), wt);
-								if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-									p.sendMessage("world thirst Nether OFF");
-								}
-							}
-						}
-				}
-			}
-		}
-	}, 0L, time);
-}
-
-public void thirst_nether() {
-	int time = plugin.getConfig().getInt("Nether decrease rate") * 20;
-	idt5 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-		@Override
-		public void run() {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) && p.getLocation().getWorld().getName().endsWith("_nether") && (!p.hasPermission("Thirstforwater.tfw.vip"))) {
-					if (list.get(p.getUniqueId()) > 0) {
-						int wt = list.get(p.getUniqueId()) - 1;
-						list.replace(p.getUniqueId(), wt);
-						if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-							p.sendMessage("Nether thirst");
-						}
-					}
-				}
-			}
-		}
-	}, 0L, time);
-}
-
-public void message() {
-	idt6 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-		@Override
-		public void run() {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) {
-						if (!plugin.getConfig().getBoolean("Actionbar") && plugin.getConfig().getBoolean("Messages")) {
-							if (list.get(p.getUniqueId()) < 20) {
-								p.sendMessage(ChatColor.RED + plugin.getConfig().getString("LowWaterMessage"));
-							} else if (list.get(p.getUniqueId()) < 110 && list.get(p.getUniqueId()) > 100) {
-								p.sendMessage(ChatColor.GREEN + plugin.getConfig().getString("HighWaterMessage"));
-							}
-						}
-				}
-			}
-		}
-	}, 0L, 1200L);
-}
-
-public void sprint() {
-	int spr = plugin.getConfig().getInt("Sprint rate") * 20;
-	idt4 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-		@Override
-		public void run() {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				 if (plugin.getConfig().getBoolean("Nether")) {
-					 if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && !p.getLocation().getWorld().getName().endsWith("_nether") && (!p.hasPermission("Thirstforwater.tfw.vip"))) {
-						 if (p.isSprinting()) {
-							 if (list.get(p.getUniqueId()) > 0) {
-								 int wt = list.get(p.getUniqueId()) - 1;
-								 list.replace(p.getUniqueId(), wt);
-								 if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-									 p.sendMessage("world sprint Nether ON");
-								 }
-							 }
-						 }
-					 }
-				 } else {
-					 if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE) && (!p.hasPermission("Thirstforwater.tfw.vip"))) {
-						 if (p.isSprinting()) {
-							 if (list.get(p.getUniqueId()) > 0) {
-								 int wt = list.get(p.getUniqueId()) - 1;
-								 list.replace(p.getUniqueId(), wt);
-								 if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-									 p.sendMessage("world sprint Nether OFF");
-								 }
-							 }
-
-						 }
-					 }
-				 }
-			}
-		}
-	}, 0L, spr);
-}
-
-public void sprint_nether() {
-	int spr = plugin.getConfig().getInt("Nether sprint rate") * 20;
-	idt7 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-		@Override
-		public void run() {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && p.getLocation().getWorld().getName().endsWith("_nether") && (!p.hasPermission("Thirstforwater.tfw.vip"))) {
-					if (p.isOnline() && p.isSprinting()) {
-						if (list.get(p.getUniqueId()) > 0) {
-							int wt = list.get(p.getUniqueId()) - 1;
-							list.replace(p.getUniqueId(), wt);
-							if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-								p.sendMessage("nether sprint");
-							}
-						}
-					}
-				}
-			}
-		}
-	}, 0L, spr);
-}
-
-//I hate coding
-// --------------------------------------------------------------------------
-public void thirst_vip() {
-	int time = (plugin.getConfig().getInt("Decrease rate") * 20) * 2;
-	idt = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-		@Override
-		public void run() {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && (p.hasPermission("Thirstforwater.tfw.vip"))) {
-					if (plugin.getConfig().getBoolean("Nether")) {
-						if (!p.getLocation().getWorld().getName().endsWith("_nether")) {
-							if (list.get(p.getUniqueId()) > 0) {
-								int wt = list.get(p.getUniqueId()) - 1;
-								list.replace(p.getUniqueId(), wt);
-								if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-									p.sendMessage("world thirst Nether ON");
-								}
+							double spr = sprint.get(p.getUniqueId()) + 1;
+							sprint.replace(p.getUniqueId(), spr);
+							if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+								p.sendMessage(ChatColor.GREEN + "Sprint +1 second");
 							}
 						}
 					} else {
-						if (list.get(p.getUniqueId()) > 0) {
-							int wt = list.get(p.getUniqueId()) - 1;
-							list.replace(p.getUniqueId(), wt);
-							if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-								p.sendMessage("world thirst Nether OFF");
+						sprint.replace(p.getUniqueId(), 0.0);
+						if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+							p.sendMessage(ChatColor.GREEN + "Sprint 0, no sprinting");
+						}
+					}
+				}
+				if (!time.containsKey(p.getUniqueId())) {
+					time.put(p.getUniqueId(), 0.0);
+					if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+						p.sendMessage(ChatColor.GRAY + "Time put me");
+					}
+				} else {
+					if (worlds.containsKey(p.getWorld().getName())) {
+						if (p.hasPermission("Thirstforwater.tfw.vip")) {
+							Double th = time.get(p.getUniqueId()) + 0.5;
+							time.replace(p.getUniqueId(), th);
+							if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+								p.sendMessage(ChatColor.GREEN + "Time +0.5");
+							}
+						} else {
+							Double th = time.get(p.getUniqueId()) + 1.0;
+							time.replace(p.getUniqueId(), th);
+							if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+								p.sendMessage(ChatColor.GREEN + "Time +1");
 							}
 						}
 					}
 				}
-			}
-		}
-	}, 0L, time);
-}
-
-public void thirst_nether_vip() {
-	int time = (plugin.getConfig().getInt("Nether decrease rate") * 20) * 2;
-	idt5 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-		@Override
-		public void run() {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) && p.getLocation().getWorld().getName().endsWith("_nether") && (p.hasPermission("Thirstforwater.tfw.vip"))) {
-					if (list.get(p.getUniqueId()) > 0) {
-						int wt = list.get(p.getUniqueId()) - 1;
-						list.replace(p.getUniqueId(), wt);
-						if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-							p.sendMessage("Nether thirst");
-						}
-					}
-				}
-			}
-		}
-	}, 0L, time);
-}
-
-public void sprint_vip() {
-	int spr = (plugin.getConfig().getInt("Sprint rate") * 20) * 2;
-	idt4 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-		@Override
-		public void run() {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (plugin.getConfig().getBoolean("Nether")) {
-					if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && !p.getLocation().getWorld().getName().endsWith("_nether") && (p.hasPermission("Thirstforwater.tfw.vip"))) {
-						if (p.isSprinting()) {
-							if (list.get(p.getUniqueId()) > 0) {
-								int wt = list.get(p.getUniqueId()) - 1;
-								list.replace(p.getUniqueId(), wt);
-								if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-									p.sendMessage("world sprint Nether ON VIP");
-								}
-							}
+				if (worlds_sprint.containsKey(p.getWorld().getName()) && sprint.get(p.getUniqueId()) > 1) {
+					if (time.get(p.getUniqueId()) >= worlds_sprint.get(p.getWorld().getName())) {
+						int thir = list.get(p.getUniqueId()) - 1;
+						list.replace(p.getUniqueId(), thir);
+						time.replace(p.getUniqueId(), 0.0);
+						if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+							p.sendMessage(ChatColor.RED + "Thirst -1, sprint: " + list.get(p.getUniqueId()));
 						}
 					}
 				} else {
-					if ((p.getGameMode() == GameMode.SURVIVAL) || (p.getGameMode() == GameMode.ADVENTURE) && (p.hasPermission("Thirstforwater.tfw.vip"))) {
-						if (p.isSprinting()) {
-							if (list.get(p.getUniqueId()) > 0) {
-								int wt = list.get(p.getUniqueId()) - 1;
-								list.replace(p.getUniqueId(), wt);
-								if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-									p.sendMessage("world sprint Nether OFF VIP");
-								}
-							}
-
+					if (time.get(p.getUniqueId()) >= worlds.get(p.getWorld().getName())) {
+						int thir = list.get(p.getUniqueId()) - 1;
+						list.replace(p.getUniqueId(), thir);
+						time.replace(p.getUniqueId(), 0.0);
+						if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+							p.sendMessage(ChatColor.RED + "Thirst -1: " + + list.get(p.getUniqueId()));
 						}
+					}
+				}
+				if (plugin.getConfig().getBoolean("messages") && !plugin.getConfig().getBoolean("Actionbar")) {
+					if (list.get(p.getUniqueId()) > 100) {
+						String txt = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("HighWaterMessage"));
+						messag(p, txt);
+					} else if (list.get(p.getUniqueId()) <= 19) {
+						String txt = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("LowWaterMessage"));
+						messag(p, txt);
+					}
+				}
+				if (list.get(p.getUniqueId()) <= 0) {
+					if (p.getHealth() > 0 && list.get(p.getUniqueId()) <= 0) {
+						p.damage(plugin.getConfig().getInt("Damage"));
 					}
 				}
 			}
 		}
-	}, 0L, spr);
+	}, 0L, 20);
 }
 
-public void sprint_nether_vip() {
-	int spr = (plugin.getConfig().getInt("Nether sprint rate") * 20) * 2;
-	idt7 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-		@Override
-		public void run() {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && p.getLocation().getWorld().getName().endsWith("_nether")) {
-					if (p.isOnline() && p.isSprinting() && p.hasPermission("Thirstforwater.tfw.vip")) {
-						if (list.get(p.getUniqueId()) > 0) {
-							int wt = list.get(p.getUniqueId()) - 1;
-							list.replace(p.getUniqueId(), wt);
-							if (plugin.getConfig().getBoolean("debug") && p.isOp()) {
-								p.sendMessage("nether sprint VIP");
-							}
-						}
-					}
-				}
-			}
-		}
-	}, 0L, spr);
-}
-// --------------------------------------------------------------------------
-
-public void damage(){
-	idt3 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-		@Override
-		public void run() {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) {
-						if (list.get(p.getUniqueId()) <= 0) {
-							if (p.getHealth() > 0 && list.get(p.getUniqueId()) <= 0) {
-								p.damage(plugin.getConfig().getInt("Damage"));
-							}
-						}
-					}
-				}
-			}
-	}, 0L, 20L);
-}
 
 public void messag(Player p, String message) {
 	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
 }
 
 public void monitor() {
-	idt2 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-		@Override
-		public void run() {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst"))) {
-						if (plugin.getConfig().getBoolean("Actionbar")) {
-							if (!plugin.getConfig().getBoolean("Minimalismbar")) {
-								if (list.get(p.getUniqueId()) <= 0) {
-									String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_RED + "---------------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-									messag(p, message);
-								} else if (list.get(p.getUniqueId()) > 100) {
-									String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.DARK_BLUE + "####################" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-									messag(p, message);
-								} else if (list.get(p.getUniqueId()) >=20) {
-									messag(p, ChatColor.GOLD + "" + ChatColor.BOLD + "[" + getProgressBar(list.get(p.getUniqueId()), 100, 20, '#', '-', ChatColor.DARK_BLUE, ChatColor.DARK_GRAY) + ChatColor.GOLD + "" + ChatColor.BOLD + "]");
-								} else if (list.get(p.getUniqueId()) <= 19) {
-									messag(p, ChatColor.GOLD + "" + ChatColor.BOLD + "[" + getProgressBar(list.get(p.getUniqueId()), 100, 20, '#', '-', ChatColor.RED, ChatColor.DARK_GRAY) + ChatColor.GOLD + "" + ChatColor.BOLD + "]");
-								} else if (list.get(p.getUniqueId()) > 0) {
-									String message = ChatColor.GOLD + "" + ChatColor.BOLD + "[" + ChatColor.RED + "#" + ChatColor.DARK_GRAY + "-------------------" + ChatColor.GOLD + "" + ChatColor.BOLD + "]";
-									messag(p, message);
-								}
-							} else {
-								if (list.get(p.getUniqueId()) > 100) {
-									messag(p, ChatColor.DARK_BLUE + "--------------------");
-								} else if (list.get(p.getUniqueId()) >= 20) {
-									messag(p, getProgressBar(list.get(p.getUniqueId()), 100, 20, '-', '-', ChatColor.DARK_BLUE, ChatColor.DARK_GRAY));
-								} else if (list.get(p.getUniqueId()) <= 19) {
-									messag(p, getProgressBar(list.get(p.getUniqueId()), 100, 20, '-', '-', ChatColor.RED, ChatColor.DARK_GRAY));
-								} else if (list.get(p.getUniqueId()) <= 0) {
-									String message = ChatColor.DARK_RED + "--------------------";
-									messag(p, message);
-								}
-							}
-						}
+	idt2 = getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			if ((p.getGameMode() != GameMode.CREATIVE) && (p.getGameMode() != GameMode.SPECTATOR) && (!p.hasPermission("Thirstforwater.noThirst")) && (worlds.containsKey(p.getWorld().getName()))) {
+				if (plugin.getConfig().getBoolean("Actionbar")) {
+					if (list.get(p.getUniqueId()) <= 0) {
+						String message = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Indicator_empty"));
+						messag(p, message);
+					} else if (list.get(p.getUniqueId()) > 100) {
+						String message = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Indicator_full"));
+						messag(p, message);
+					} else {
+						messag(p, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Char_before_Indicator")) + getProgressBar(list.get(p.getUniqueId()), 100, 20) + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Char_after_Indicator")));
+					}
 				}
 			}
 		}
 	}, 0L, 5L);
 }
 
-public String getProgressBar(int current, int max, int totalBars, char symbol1, char symbol2, ChatColor completedColor, ChatColor notCompletedColor) {
+public String getProgressBar(int current, int max, int totalBars) {
 	float percent = (float) current / max;
 	int progressBars = (int) (totalBars * percent);
-	return Strings.repeat("" + completedColor + symbol1, progressBars) + Strings.repeat("" + notCompletedColor + symbol2, totalBars - progressBars);
+	return Strings.repeat("" + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Char1")), progressBars) + Strings.repeat("" + ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Char2")), totalBars - progressBars);
 }
 
 @EventHandler
@@ -367,7 +177,7 @@ public void onPlayerJoin(PlayerJoinEvent player) {
 
 @EventHandler
 public void sprint(PlayerMoveEvent event) {
-	if (event.getPlayer().isSprinting() && list.get(event.getPlayer().getUniqueId()) <= 19 && plugin.getConfig().getBoolean("Sprint")) {
+	if (event.getPlayer().isSprinting() && list.get(event.getPlayer().getUniqueId()) <= 19 && plugin.getConfig().getBoolean("Sprint") && (worlds.containsKey(event.getPlayer().getWorld().getName()))) {
 		event.setCancelled(true);
 		event.getPlayer().setSprinting(false);
 	}
@@ -375,7 +185,7 @@ public void sprint(PlayerMoveEvent event) {
 
 @EventHandler
 public void sprinting(PlayerToggleSprintEvent event) {
-	if (event.getPlayer().isSprinting() && list.get(event.getPlayer().getUniqueId()) <= 19 && plugin.getConfig().getBoolean("Sprint")) {
+	if (event.getPlayer().isSprinting() && list.get(event.getPlayer().getUniqueId()) <= 19 && plugin.getConfig().getBoolean("Sprint") && (worlds.containsKey(event.getPlayer().getWorld().getName()))) {
 		event.setCancelled(true);
 		event.getPlayer().setSprinting(false);
 	}
@@ -402,7 +212,7 @@ public void onQuit(PlayerQuitEvent e){
 @EventHandler
 public void onPlayerRespawn(PlayerRespawnEvent player){
 	list.replace(player.getPlayer().getUniqueId(), 110);
-	if (plugin.getConfig().getBoolean("debug") && player.getPlayer().isOp()) {
+	if (plugin.getConfig().getBoolean("debug") && player.getPlayer().hasPermission("Thirstforwater.noThirst.debug")) {
 		player.getPlayer().sendMessage("Water restored");
 	}
 }
@@ -410,60 +220,59 @@ public void onPlayerRespawn(PlayerRespawnEvent player){
 // I don't know how this works, but this works. Nice.
 @EventHandler
 public void onPlayerEvent(PlayerItemConsumeEvent event) {
-	if (event.getItem().getType() == Material.POTION && event.getItem().hasItemMeta() && event.getItem().getItemMeta().hasDisplayName() && event.getItem().getItemMeta().hasLore() && event.getItem().getItemMeta().getLore().contains(ChatColor.AQUA + plugin.getConfig().getString("WaterLore")) && event.getItem().getItemMeta().getDisplayName().equals(ChatColor.AQUA + plugin.getConfig().getString("WaterName"))) {
+	if (event.getItem().getType() == Material.POTION && event.getItem().hasItemMeta() && event.getItem().getItemMeta().hasDisplayName() && event.getItem().getItemMeta().hasLore() && event.getItem().getItemMeta().getLore().contains(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("WaterLore"))) && event.getItem().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("WaterName")))) {
 		if ((list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryClearWater")) <= 110) {
 			int gg = list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryClearWater");
 			list.replace(event.getPlayer().getUniqueId(), gg);
-			if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
+			if (plugin.getConfig().getBoolean("debug") && event.getPlayer().hasPermission("Thirstforwater.noThirst.debug")) {
 				event.getPlayer().sendMessage("Added water, clear water");
 			}
 		} else {
 			list.replace(event.getPlayer().getUniqueId(), 110);
-			if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
+			if (plugin.getConfig().getBoolean("debug") && event.getPlayer().hasPermission("Thirstforwater.noThirst.debug")) {
 				event.getPlayer().sendMessage("Added water, full, clear water");
 			}
 		}
 	} else if (event.getItem() != null && event.getItem().getItemMeta() != null && event.getItem().getItemMeta() instanceof PotionMeta) {
 		PotionType potionType = ((PotionMeta) event.getItem().getItemMeta()).getBasePotionData().getType();
 		if (potionType == PotionType.WATER) {
-				Random r = new Random();
-				int ran = r.nextInt(101);
-				if (ran <= plugin.getConfig().getInt("Poisoning bottle chance")) {
-					event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, (plugin.getConfig().getInt("Poisoning duration") * 20 ), 1));
-					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
-						event.getPlayer().sendMessage("Poisoning");
-					}
+			Random r = new Random();
+			int ran = r.nextInt(101);
+			if (ran <= plugin.getConfig().getInt("Poisoning bottle chance")) {
+				event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, (plugin.getConfig().getInt("Poisoning duration") * 20 ), 1));
+				if (plugin.getConfig().getBoolean("debug") && event.getPlayer().hasPermission("Thirstforwater.noThirst.debug")) {
+					event.getPlayer().sendMessage("Poisoning");
 				}
-				if ((list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryBottle")) <= 110) {
-					int gg = list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryBottle");
-					list.replace(event.getPlayer().getUniqueId(), gg);
-					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
-						event.getPlayer().sendMessage("Added water, bottle");
-					}
-				} else {
-					list.replace(event.getPlayer().getUniqueId(), 110);
-					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
-						event.getPlayer().sendMessage("Added water, full, bottle");
-					}
+			}
+			if ((list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryBottle")) <= 110) {
+				int gg = list.get(event.getPlayer().getUniqueId()) + plugin.getConfig().getInt("WaterRecoveryBottle");
+				list.replace(event.getPlayer().getUniqueId(), gg);
+				if (plugin.getConfig().getBoolean("debug") && event.getPlayer().hasPermission("Thirstforwater.noThirst.debug")) {
+					event.getPlayer().sendMessage("Added water, bottle");
 				}
+			} else {
+				list.replace(event.getPlayer().getUniqueId(), 110);
+				if (plugin.getConfig().getBoolean("debug") && event.getPlayer().hasPermission("Thirstforwater.noThirst.debug")) {
+					event.getPlayer().sendMessage("Added water, full, bottle");
+				}
+			}
 		}
 	}
 }
 
-// No_Nut_November is HERE!
 
 public void addRecipe() {
 	ItemStack water = new ItemStack(Material.POTION, 1, (byte)0);
 	Material wat = water.getType();
 	ItemMeta meta = water.getItemMeta();
 
-	ArrayList<String> lore = new ArrayList<String>();
+	ArrayList<String> lore = new ArrayList<>();
 
 	lore.add(" ");
-	lore.add(ChatColor.AQUA + plugin.getConfig().getString("WaterLore"));
+	lore.add(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("WaterLore")));
 	lore.add(" ");
 	meta.setLore(lore);
-	meta.setDisplayName(ChatColor.AQUA + plugin.getConfig().getString("WaterName"));
+	meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("WaterName")));
 	water.setItemMeta(meta);
 
 	FurnaceRecipe waters = new FurnaceRecipe(water, wat);
@@ -482,19 +291,19 @@ public void onInteract(PlayerInteractEvent event) {
 				int ran = r.nextInt(101);
 				if (ran <= plugin.getConfig().getInt("Poisoning water chance")) {
 					event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, (plugin.getConfig().getInt("Poisoning duration") * 20), 1));
-					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
+					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().hasPermission("Thirstforwater.noThirst.debug")) {
 						event.getPlayer().sendMessage("Poisoning");
 					}
 				}
 				if ((list.get(event.getPlayer().getUniqueId()) + (plugin.getConfig().getInt("WaterRecoveryWater"))/2) <= 110) {
 					int gg = list.get(event.getPlayer().getUniqueId()) + (plugin.getConfig().getInt("WaterRecoveryWater")/2);
 					list.replace(event.getPlayer().getUniqueId(), gg);
-					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
+					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().hasPermission("Thirstforwater.noThirst.debug")) {
 						event.getPlayer().sendMessage("Added water, water");
 					}
 				} else {
 					list.replace(event.getPlayer().getUniqueId(), 110);
-					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().isOp()) {
+					if (plugin.getConfig().getBoolean("debug") && event.getPlayer().hasPermission("Thirstforwater.noThirst.debug")) {
 						event.getPlayer().sendMessage("Added water, full, water");
 					}
 				}
@@ -505,9 +314,7 @@ public void onInteract(PlayerInteractEvent event) {
 }
 
 public void loadhashmap(){
-	if (plugin.getConfig().getStringList("data").isEmpty()) {
-		return;
-	} else {
+	if (!plugin.getConfig().getStringList("data").isEmpty()) {
 		for (String rawData : plugin.getConfig().getStringList("data")) {
 			String[] raw = rawData.split(":");
 			list.put(UUID.fromString(raw[0]), Integer.valueOf(raw[1]));
@@ -518,8 +325,32 @@ public void loadhashmap(){
 	}
 }
 
+public void loadWorlds(){
+	if (!plugin.getConfig().getStringList("Enabled_Worlds").isEmpty()) {
+		for (String rawData : plugin.getConfig().getStringList("Enabled_Worlds")) {
+			String[] raw = rawData.split(":");
+			worlds.put(raw[0], Integer.valueOf(raw[1]));
+		}
+		if (plugin.getConfig().getBoolean("debug")) {
+			Bukkit.broadcastMessage("Hashmap Worlds loaded");
+		}
+	}
+}
+
+public void loadWorlds_sprint(){
+	if (!plugin.getConfig().getStringList("SprintRate_Worlds").isEmpty()) {
+		for (String rawData : plugin.getConfig().getStringList("SprintRate_Worlds")) {
+			String[] raw = rawData.split(":");
+			worlds_sprint.put(raw[0], Integer.valueOf(raw[1]));
+		}
+		if (plugin.getConfig().getBoolean("debug")) {
+			Bukkit.broadcastMessage("Hashmap Worlds Sprint loaded");
+		}
+	}
+}
+
 public void savehashmap(){
-	List<String> hashmapData = new ArrayList<String>();
+	List<String> hashmapData = new ArrayList<>();
 	for(UUID uuid : list.keySet()) {
 		String data = uuid.toString() + ":" + list.get(uuid);
 		hashmapData.add(data);
