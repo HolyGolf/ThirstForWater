@@ -7,8 +7,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -33,7 +31,7 @@ public void onEnable() {
 		if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
 			logger.info("There is not a new update available.");
 		} else {
-			logger.info("New version available at https://www.spigotmc.org/resources/thirstforwater.84634/");
+			logger.info("New version " + version + " available at https://www.spigotmc.org/resources/thirstforwater.84634/");
 		}
 	});
 }

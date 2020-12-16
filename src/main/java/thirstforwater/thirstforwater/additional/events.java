@@ -166,10 +166,10 @@ public void onPlayerJoin(PlayerJoinEvent player) {
 	if (!list.containsKey(player.getPlayer().getUniqueId())) {
 		list.put(player.getPlayer().getUniqueId(), 110);
 	}
-	if (player.getPlayer().isOp()) {
-		new UpdateChecker(plugin, 84634).getVersion(version -> { /*!!!!!!!!!Вставить id!!!!!!!!!*/
+	if (player.getPlayer().isOp() || player.getPlayer().hasPermission("Thirstforwater.tfw.settings")) {
+		new UpdateChecker(plugin, 84634).getVersion(version -> {
 			if (!plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
-				player.getPlayer().sendMessage(ChatColor.GOLD + "[ThirstForWater]: New version available at https://www.spigotmc.org/resources/thirstforwater.84634/");
+				player.getPlayer().sendMessage(ChatColor.GOLD + "[ThirstForWater]: New version " + version + " available at https://www.spigotmc.org/resources/thirstforwater.84634/");
 			}
 		});
 	}

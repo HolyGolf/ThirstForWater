@@ -1,7 +1,7 @@
 name: ThirstforWater
-version: 2
+version: 2.0.1
 main: thirstforwater.thirstforwater.Thirstforwater
-api-version: 1.13
+api-version: 1.16
 authors: [HolyGolf]
 description: This plugin adds a thirst and drink system.
 website: https://github.com/HolyGolf
