@@ -25,7 +25,7 @@ public boolean onCommand(CommandSender sender, Command command, String label, St
 				plugin.getServer().getPluginManager().enablePlugin(plugin);
 				sender.sendMessage(ChatColor.GOLD + "[ThirstForWater]: Plugin reloaded");
 			} else {
-				String txt = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
+				String txt = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
 				sender.sendMessage(txt);
 			}
 			return true;
@@ -33,7 +33,7 @@ public boolean onCommand(CommandSender sender, Command command, String label, St
 			if (sender.isOp() || sender.hasPermission("Thirstforwater.tfw.settings")) {
 				GUIcreator.open(((Player) sender).getPlayer());
 			} else {
-				String txt = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
+				String txt = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
 				sender.sendMessage(txt);
 			}
 			return true;
@@ -45,7 +45,7 @@ public boolean onCommand(CommandSender sender, Command command, String label, St
 				plugin.getServer().getPluginManager().enablePlugin(plugin);
 				sender.sendMessage(ChatColor.RED + "ThirstForWater disabled");
 			} else {
-				String txt = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
+				String txt = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
 				sender.sendMessage(txt);
 			}
 		} else if (args[0].equals("enable")) {
@@ -56,7 +56,7 @@ public boolean onCommand(CommandSender sender, Command command, String label, St
 				plugin.getServer().getPluginManager().enablePlugin(plugin);
 				sender.sendMessage(ChatColor.RED + "ThirstForWater enabled");
 			} else {
-				String txt = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
+				String txt = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Nopermission"));
 				sender.sendMessage(txt);
 			}
 		} else {

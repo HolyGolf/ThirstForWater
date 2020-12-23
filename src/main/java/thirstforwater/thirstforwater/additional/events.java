@@ -50,17 +50,19 @@ public void thirst() {
 					}
 				} else {
 					if (p.isSprinting()) {
-						if (p.hasPermission("Thirstforwater.tfw.vip")) {
-							double spr = sprint.get(p.getUniqueId()) + 0.5;
-							sprint.replace(p.getUniqueId(), spr);
-							if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
-								p.sendMessage(ChatColor.GREEN + "Sprint +0.5 second");
-							}
-						} else {
-							double spr = sprint.get(p.getUniqueId()) + 1;
-							sprint.replace(p.getUniqueId(), spr);
-							if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
-								p.sendMessage(ChatColor.GREEN + "Sprint +1 second");
+						if (worlds_sprint.containsKey(p.getWorld().getName())) {
+							if (p.hasPermission("Thirstforwater.tfw.vip")) {
+								double spr = sprint.get(p.getUniqueId()) + 0.5;
+								sprint.replace(p.getUniqueId(), spr);
+								if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+									p.sendMessage(ChatColor.GREEN + "Sprint +0.5 second");
+								}
+							} else {
+								double spr = sprint.get(p.getUniqueId()) + 1;
+								sprint.replace(p.getUniqueId(), spr);
+								if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+									p.sendMessage(ChatColor.GREEN + "Sprint +1 second");
+								}
 							}
 						}
 					} else {
@@ -102,12 +104,14 @@ public void thirst() {
 						}
 					}
 				} else {
-					if (time.get(p.getUniqueId()) >= worlds.get(p.getWorld().getName())) {
-						int thir = list.get(p.getUniqueId()) - 1;
-						list.replace(p.getUniqueId(), thir);
-						time.replace(p.getUniqueId(), 0.0);
-						if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
-							p.sendMessage(ChatColor.RED + "Thirst -1: " + + list.get(p.getUniqueId()));
+					if (worlds.containsKey(p.getWorld().getName())) {
+						if (time.get(p.getUniqueId()) >= worlds.get(p.getWorld().getName())) {
+							int thir = list.get(p.getUniqueId()) - 1;
+							list.replace(p.getUniqueId(), thir);
+							time.replace(p.getUniqueId(), 0.0);
+							if (plugin.getConfig().getBoolean("debug") && p.hasPermission("Thirstforwater.noThirst.debug")) {
+								p.sendMessage(ChatColor.RED + "Thirst -1: " + +list.get(p.getUniqueId()));
+							}
 						}
 					}
 				}

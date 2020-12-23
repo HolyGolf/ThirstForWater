@@ -1,5 +1,5 @@
 name: ThirstforWater
-version: 2.0.1
+version: 2.0.2
 main: thirstforwater.thirstforwater.Thirstforwater
 api-version: 1.16
 authors: [HolyGolf]
@@ -25,3 +25,7 @@ commands:
     description: With this permission, thirst is spent longer (x2 slower)
     usage: /<command>
     permission: Thirstforwater.tfw.vip
+  tfw noThirst:
+    description: Removing thirst for player
+    usage: /<command>
+    permission: Thirstforwater.tfw.noThirst
